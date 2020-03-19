@@ -1,0 +1,22 @@
+<div class="date">
+  <h1>
+    <% date = Time.now.to_s %>
+   <%= Date.parse(date).strftime("%m/%d/%Y")%>
+  </h1>
+</div>
+
+
+
+
+
+<div contenteditable="true" class="entry">
+<p class="tab">&nbsp;</p>
+</div>
+
+
+
+
+<%= form_for :entry do |f| %>
+<%= f.text_area :body, class: "body" %>
+<%= f.button :submit, class: "button"%>
+<% end %>
