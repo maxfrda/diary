@@ -9,14 +9,19 @@
 
 
 
-<div contenteditable="true" class="entry">
-<p class="tab">&nbsp;</p>
+<div contenteditable="true" id="entry">
+  <p id="tab">&nbsp;</p>
 </div>
 
-
-
-
-<%= form_for :entry do |f| %>
-<%= f.text_area :body, class: "body" %>
-<%= f.button :submit, class: "button"%>
+<%= form_for @entry do |f| %>
+<%= f.text_field :body, class: "body" %>
+<%= f.button :submit, class: "button" %>
 <% end %>
+
+<script type="text/javascript">
+function myFunction() {
+  document.getElementById("entry").focus(); // Click on the checkbox
+}
+myFunction()
+</script>
+

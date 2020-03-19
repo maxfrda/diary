@@ -4,6 +4,9 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params)
   end
 
+  def index
+    @entry = Entry.all
+  end
   def create
     @entry = Entry.new(entry_params)
     @entry.date = Date.today.strftime
