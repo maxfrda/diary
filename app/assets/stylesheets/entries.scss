@@ -17,12 +17,24 @@ font-size: 20px;
   margin-left: 40px;
 }
 
-.button{
+#button{
   visibility: hidden;
 }
 
 
-.body {
+#entry_body {
   visibility: hidden;
 }
 
+#save {
+  color: white;
+  background-color: #713131;
+  border-radius: 3px;
+  border:none;
+  width:80px;
+  height: 30px;
+}
+
+#save:hover {
+  background-color: brown;
+}
