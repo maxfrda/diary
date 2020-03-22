@@ -1,24 +1,25 @@
-<div class="date">
-  <h1>
-    <% date = Time.now.to_s %>
-   <%= Date.parse(date).strftime("%m/%d/%Y")%>
-  </h1>
+
+<div class="document">
+    <div class="col-12 col-lg-12">
+      <div class="date">
+        <h1>
+          <% date = Time.now.to_s %>
+         <%= Date.parse(date).strftime("%m/%d/%Y")%>
+        </h1>
+      </div>
+  </div>
+    <div class="col-12 col-lg-12">
+      <div contenteditable="true" id="entry">
+        <p id="tab">&nbsp;</p>
+      </div>
+    </div>
 </div>
-
-
-
-
-
-<div contenteditable="true" id="entry">
-  <p id="tab">&nbsp;</p>
-</div>
+ <br>
+ <br>
 
 <button id="save">
   Save
 </button>
- <br>
- <br>
-
 <%= form_for @entry do |f| %>
 <%= f.text_field :body, id: "entry_body" %>
 <%= f.button :submit, id: "button" %>
