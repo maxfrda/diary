@@ -42,13 +42,14 @@ font-size: 16px;
 }
 
 .document{
-  box-shadow: 0 0 10px rgba(0,0,0,.4);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   margin: 10px auto;
   padding: 0px;
   width: 45%;
   height: 900px; /* or height: 9.5in; */
   clear: both;
   page-break-after: always;
+  background-color: white;
 
 }
 
@@ -63,5 +64,5 @@ font-size: 16px;
 
 
 body{
-  background-color: black;
+  background-color: #f7f7f7 !important;
 }
