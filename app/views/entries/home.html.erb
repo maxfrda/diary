@@ -1,6 +1,14 @@
-  <button id="save">
-    Save
-  </button>
+<div class="container">
+  <div class="subtitle">
+    <p>
+      <% if user_signed_in?%>
+      <%= @user.name.capitalize %>'s Diary
+      <% else %>
+      <%= link_to "Log-in", user_session_path %>
+      to save entries
+      <% end %>
+    </p>
+  </div>
   <div class="document">
     <div class="date">
       <h1>
@@ -12,6 +20,10 @@
       <p id="tab">&nbsp;</p>
     </div>
   </div>
+  <button id="save">
+    Save
+  </button>
+</div>
 
 
 <%= form_for @entry do |f| %>
