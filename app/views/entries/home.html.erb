@@ -1,22 +1,27 @@
-
-<div class="document">
+  <div class="subtitle">
+    <p>
+      <% if user_signed_in?%>
+      <%= @user.name.capitalize %>'s Diary
+      <% else %>
+      <%= link_to "Log-in", user_session_path %>
+      to save entries
+      <% end %>
+    </p>
+  </div>
+  <div class="document">
+    <div class="date">
+      <h1>
+        <% date = Time.now.to_s %>
+       <%= Date.parse(date).strftime("%m/%d/%Y")%>
+      </h1>
+    </div>
+    <div contenteditable="true" id="entry">
+      <p id="tab">&nbsp;</p>
+    </div>
+  </div>
   <button id="save">
     Save
   </button>
-    <div class="col-12 col-lg-12">
-      <div class="date">
-        <h1>
-          <% date = Time.now.to_s %>
-         <%= Date.parse(date).strftime("%m/%d/%Y")%>
-        </h1>
-      </div>
-  </div>
-    <div class="col-12 col-lg-12">
-      <div contenteditable="true" id="entry">
-        <p id="tab">&nbsp;</p>
-      </div>
-    </div>
-</div>
 
 
 <%= form_for @entry do |f| %>
