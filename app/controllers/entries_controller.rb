@@ -2,6 +2,7 @@ require 'date'
 class EntriesController < ApplicationController
   def home
     @entry = Entry.new
+    @entries = Entry.all
     @user = current_user
   end
 

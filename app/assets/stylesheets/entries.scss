@@ -1,5 +1,6 @@
 /* line 6, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 3, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 4, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 [contenteditable="true"]:active,
 [contenteditable="true"]:focus {
   border: none;
@@ -8,31 +9,37 @@
 
 /* line 13, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 10, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
-#entry {
+/* line 12, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+.entry {
   font-size: 16px;
 }
 
 /* line 18, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
-/* line 15, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
-#tab {
+/* line 15, /home/max/code/maxfrda/diary/diary/app/a */
+/* line 19, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+.tab {
   margin-left: 40px;
+  margin-right: 40px;
 
 }
 
 /* line 22, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 20, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 25, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 #button {
   visibility: hidden;
 }
 
 /* line 27, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 25, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 31, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 #entry_body {
   visibility: hidden;
 }
 
 /* line 31, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 30, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 37, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 #save {
   color: white;
   background-color: #713131;
@@ -43,17 +50,19 @@
   float: left;
   position: absolute;
   top: 2%;
- right: 21%
+  right: 22%
 }
 
 /* line 40, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 40, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 52, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 #save:hover {
   background-color: brown;
 }
 
 /* line 44, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 45, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 58, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 .document {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   margin: 10px auto;
@@ -62,11 +71,11 @@
   min-height: 900px;
   /* or height: 9.5in; */
   background-color: white;
-
 }
 
 /* line 56, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 56, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 73, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 .date {
   text-align: center;
   font-family: 'Cinzel', serif;
@@ -77,21 +86,15 @@
 
 /* line 65, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 65, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+/* line 83, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 body {
   background-color: #f7f7f7 !important;
 }
 
 /* line 69, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 70, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
-// .container {
-//   width: 55%;
-//   height: 910px;
-//   clear: both;
-//   page-break-after: always;
-//   background-color: #f7f7f7;
-// }
-
-.subtitle{
+/* line 97, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
+.subtitle {
   position: absolute;
   top: 15%;
   left: 5%;
@@ -99,3 +102,6 @@ body {
   font-family: 'Tangerine', cursive;
 }
 
+.margin{
+  margin-bottom: 450px;
+}
