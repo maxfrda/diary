@@ -1,0 +1,85 @@
+  <div class="subtitle">
+    <p>
+      <%= @user.name.capitalize %>'s Diary
+    </p>
+  </div>
+
+  <div class="entries">
+    <div class="date">
+      <h1>
+        <% entry_date = @entry.date %>
+        <%= Date.parse(entry_date).strftime("%m/%d/%Y") %>
+      </h1>
+    </div>
+    <div class="entry">
+      <%= @entry.body %>
+      <div class="wrapper">
+      <div class="divider div-transparent"></div>
+      </div>
+      <p contenteditable="true" class="tab">&nbsp;</p>
+    </div>
+    <div class="margin"></div>
+     <button id="save">
+    Save
+  </button>
+  </div>
+
+
+<%= form_for @update, :url => entry_path do |f| %>
+<%= f.text_field :body, id: "entry_body" %>
+<%= f.button :submit, id: "button" %>
+<% end %>
+
+
+  <script type="text/javascript">
+function clickTag() {
+  document.getElementsByClassName("tab")[0].focus(); // Click on the checkbox
+
+}
+clickTag()
+</script>
+
+<script type="text/javascript">
+
+
+var textHeight = 902
+
+function yourFunction(){
+    // do whatever you like here
+     // method to be executed;
+    var docHeight = document.getElementsByClassName("entries")[0].clientHeight;
+
+    var difference = textHeight - docHeight;
+    if (difference > 29) {
+      textHeight = docHeight + 2
+    };
+
+    if (docHeight >= textHeight) {
+    window.scrollBy(0, 22);
+    textHeight = docHeight + 22;
+
+
+
+    // alert(numberOfLineBreaks);
+  };
+
+    setTimeout(yourFunction, 100);
+}
+
+yourFunction()
+
+
+
+</script>
+
+<!-- injects contents of p tag into form and submits -->
+<script type="text/javascript">
+
+  document.getElementById("save").onclick = myFunction;
+  function myFunction() {
+    var input = document.getElementById("entry_body");
+    var content = document.getElementsByClassName("tab")[0].innerHTML.replace(/\&nbsp;/g, '');
+    input.value = (content)
+    document.getElementById("button").click();
+}
+</script>

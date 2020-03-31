@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_162356) do
+ActiveRecord::Schema.define(version: 2020_03_29_225156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 2020_03_24_162356) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "updates", force: :cascade do |t|
+    t.text "body"
+    t.string "date"
+    t.bigint "entry_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_id"], name: "index_updates_on_entry_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,4 +47,5 @@ ActiveRecord::Schema.define(version: 2020_03_24_162356) do
   end
 
   add_foreign_key "entries", "users"
+  add_foreign_key "updates", "entries"
 end

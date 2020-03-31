@@ -9,14 +9,6 @@
     </p>
   </div>
 
-  <div class="entries">
-    <div>
-      <h1 >
-
-      </h1>
-    </div>
-  </div>
-
   <div class="document">
     <div class="date">
       <h1>
@@ -32,6 +24,32 @@
   <button id="save">
     Save
   </button>
+
+  <% if user_signed_in? %>
+  <div class="entries">
+  <% @user.entries.each do |entry| %>
+    <div class="date">
+      <h1>
+        <% entry_date = entry.date %>
+        <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
+        <%= link_to entry_date, entry_path(entry) %>
+      </h1>
+    </div>
+    <div class="entry">
+      <%= entry.body %>
+    </div>
+    <% if entry.updates.exists? %>
+    <% entry.updates.each do |update| %>
+      <div class="wrapper">
+      <div class="divider div-transparent"></div>
+      <p> <%= update.body %></p>
+      </div>
+    <% end %>
+    <% end %>
+    <% end %>
+    <% end %>
+  </div>
+<%= link_to "Log out", destroy_user_session_path, method: :delete %>
 
 
 <%= form_for @entry do |f| %>

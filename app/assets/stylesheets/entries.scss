@@ -12,14 +12,15 @@
 /* line 12, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 .entry {
   font-size: 16px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 /* line 18, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 15, /home/max/code/maxfrda/diary/diary/app/a */
 /* line 19, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 .tab {
-  margin-left: 40px;
-  margin-right: 40px;
+
 
 }
 
@@ -105,3 +106,40 @@ body {
 .margin{
   margin-bottom: 450px;
 }
+
+.entries{
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin: 10px auto;
+  padding: 10px;
+  width: 45%;
+  min-height: 900px;
+  /* or height: 9.5in; */
+  background-color: white;
+}
+
+// These are for the show page
+
+.wrapper
+{
+  padding-bottom: 20px;
+}
+
+.divider
+{
+  position: relative;
+  margin-top: 40px;
+  height: 1px;
+}
+
+.div-transparent:before
+{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  width: 90%;
+  height: 1px;
+  background-image: linear-gradient(to right, transparent, rgb(48,49,51), transparent);
+}
+
