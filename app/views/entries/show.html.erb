@@ -12,12 +12,12 @@
       </h1>
     </div>
     <div class="entry">
-      <%= @entry.body %>
+      <%= @entry.body.html_safe %>
     <% if @entry.updates.exists? %>
     <% @entry.updates.each do |update| %>
       <div class="wrapper">
       <div class="divider div-transparent"></div>
-      <p> <%= update.body %></p>
+      <p> <%= update.body.html_safe %></p>
       </div>
     <% end %>
     <% end %>
@@ -86,9 +86,13 @@ yourFunction()
   document.getElementById("save").onclick = myFunction;
   function myFunction() {
     var input = document.getElementById("entry_body");
-    var content = document.getElementsByClassName("tab")[0].innerHTML.replace(/\&nbsp;/g, '');
-    var content = content.replace( /(<([^>]+)>)/ig, '');
-    input.value = (content)
+    var content = document.getElementsByClassName("tab");
+    var finalContent = '';
+    for (i = 0; i < content.length; i++) {
+      var p = document.getElementsByClassName("tab")[i].innerHTML;
+      finalContent += `${p} <br>`;
+    };
+    input.value = (finalContent);
     document.getElementById("button").click();
 }
 </script>
