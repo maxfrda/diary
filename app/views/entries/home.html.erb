@@ -1,4 +1,4 @@
-
+<!-- This is the document that the user types in, today's date by default -->
   <div class="document">
     <div class="subtitle">
       <p>
@@ -28,6 +28,7 @@
     Save
   </button>
 
+ <!--This will show entries if they exist  -->
   <% if user_signed_in? && @user.entries.exists? %>
   <div class="entries">
   <% @user.entries.each do |entry| %>
@@ -39,29 +40,32 @@
       </h1>
     </div>
     <div class="entry">
-      <%= entry.body %>
+
+      <%= entry.body.html_safe %>
     </div>
     <% if entry.updates.exists? %>
     <% entry.updates.each do |update| %>
       <div class="wrapper">
       <div class="divider div-transparent"></div>
-      <p> <%= update.body %></p>
+      <p> <%= update.body.html_safe %></p>
       </div>
     <% end %>
     <% end %>
     <% end %>
     <% end %>
   </div>
-<%= link_to "Log out", destroy_user_session_path, method: :delete %>
+  <% if user_signed_in? %>
+  <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+  <% end %>
 
-
+<!-- Javascript injects content into this form and saves it as an entry instance -->
 <%= form_for @entry do |f| %>
 <%= f.text_field :body, id: "entry_body" %>
 <%= f.button :submit, id: "button" %>
 <% end %>
 
 <!--  clicks the tag so that cursor shows up -->
-<script type="text/javascript">
+<script >
 function clickTag() {
   document.getElementsByClassName("entry")[0].focus(); // Click on the checkbox
 
@@ -70,26 +74,30 @@ clickTag()
 </script>
 
 <!-- injects contents of p tag into form and submits -->
-<script type="text/javascript">
+<script >
 
   document.getElementById("save").onclick = myFunction;
   function myFunction() {
     var input = document.getElementById("entry_body");
-    var content = document.getElementsByClassName("tab")[0].innerHTML.replace(/\&nbsp;/g, '');
-    var content= content.replace( /(<([^>]+)>)/ig, '');
-    input.value = (content)
+    var content = document.getElementsByClassName("tab");
+    var finalContent = '';
+    for (i = 0; i < content.length; i++) {
+      var p = document.getElementsByClassName("tab")[i].innerHTML;
+      finalContent += `${p} <br>`;
+    };
+    input.value = (finalContent);
     document.getElementById("button").click();
 }
 </script>
 
-<script type="text/javascript">
+<!-- This scrolls the page down automatically -->
+<script>
 
 
 var textHeight = 902
 
 function yourFunction(){
-    // do whatever you like here
-     // method to be executed;
+
     var docHeight = document.getElementsByClassName("document")[0].clientHeight;
 
     var difference = textHeight - docHeight;
