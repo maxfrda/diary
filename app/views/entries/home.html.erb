@@ -30,30 +30,32 @@
 
  <!--This will show entries if they exist  -->
   <% if user_signed_in? && @user.entries.exists? %>
-  <div class="entries">
-  <% @user.entries.each do |entry| %>
-    <div class="date">
-      <h1>
-        <% entry_date = entry.date %>
-        <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
-        <%= link_to entry_date, entry_path(entry) %>
-      </h1>
-    </div>
-    <div class="entry">
-
-      <%= entry.body.html_safe %>
-    </div>
-    <% if entry.updates.exists? %>
-    <% entry.updates.each do |update| %>
-      <div class="wrapper">
-      <div class="divider div-transparent"></div>
-      <p> <%= update.body.html_safe %></p>
+    <% sorted_entries = @user.entries.sort_by(&:created_at).reverse %>
+    <% sorted_entries.each do |entry| %>
+      <div class="entries">
+        <div class="date">
+          <h1>
+            <% entry_date = entry.date %>
+            <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
+            <%= link_to entry_date, entry_path(entry) %>
+          </h1>
+        </div>
+        <!-- Shows each entry -->
+        <div class="entry">
+          <%= entry.body.html_safe %>
+        </div>
+        <% if entry.updates.exists? %>
+          <% entry.updates.each do |update| %>
+            <div class="wrapper">
+            <div class="divider div-transparent"></div>
+              <p> <%= update.body.html_safe %></p>
+            </div>
+          <% end %>
+        <% end %>
+        <div class="margin"></div>
       </div>
     <% end %>
-    <% end %>
-    <% end %>
-    <% end %>
-  </div>
+  <% end %>
   <% if user_signed_in? %>
   <%= link_to "Log out", destroy_user_session_path, method: :delete %>
   <% end %>
