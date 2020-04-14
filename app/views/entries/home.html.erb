@@ -1,91 +1,120 @@
-<!-- This is the document that the user types in, today's date by default -->
+    <!-- This checks to see if the database has an entry that contains today's date, if it does it will skip creation form for today's entry (line 20 - 55) -->
+    <% if user_signed_in? && @user.entries.exists? %>
+      <% sorted_entries = @user.entries.sort_by(&:created_at)%>
+      <% sorted_entries.each do |entry| %>
+        <% if entry.date == Date.today.strftime %>
+          <% @home = "index" %>
+          <% break %>
+        <% end %>
+      <% end %>
+    <% end %>
 
+<!-- This is the document that the user types in, today's date by default, will only show today's entry hasn't been made -->
 <div class="carousel-wrapper">
   <div class="carousel">
+  <% if @home != "index" %>
     <div class="carousel__entry initial">
-      <div class="entries">
-        <div class="subtitle">
-          <p>
-            <% if user_signed_in?%>
-            <%= @user.name.capitalize %>'s Diary
-            <% else %>
-            <%= link_to "Log-in", user_session_path %>
-            to save entries
-            <% end %>
-          </p>
-          <div class="wrapper">
-          <div class="divider div-transparent div-dot"></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6 col-lg-offset-3">
+            <div class="entries">
+              <div class="subtitle">
+                <p>
+                  <% if user_signed_in?%>
+                    <%= @user.name.capitalize %>'s Diary
+                  <% else %>
+                    <%= link_to "Log-in", user_session_path %>
+                    to save entries
+                  <% end %>
+                </p>
+                <div class="wrapper">
+                  <div class="divider div-transparent div-dot"></div>
+                </div>
+              </div>
+
+              <div class="date">
+                <h1>
+                  <% date = Time.now.to_s %>
+                 <%= Date.parse(date).strftime("%m/%d/%Y")%>
+
+                </h1>
+              </div>
+              <!-- This is where you enter text  -->
+              <div contenteditable="true" class="entry">
+                <p class="tab">&nbsp;</p>
+              </div>
+              <div class="margin"></div>
+              <button id="save">
+                Save
+              </button>
+            </div>
           </div>
         </div>
-        <div class="date">
-          <h1>
-            <% date = Time.now.to_s %>
-           <%= Date.parse(date).strftime("%m/%d/%Y")%>
-          </h1>
-        </div>
-        <div contenteditable="true" class="entry">
-          <p class="tab">&nbsp;</p>
-        </div>
-        <div class="margin"></div>
-        <button id="save">
-          Save
-        </button>
       </div>
     </div>
-
+    <% end %>
 
    <!--This will show entries if they exist  -->
     <% if user_signed_in? && @user.entries.exists? %>
-      <% sorted_entries = @user.entries.sort_by(&:created_at)%>
     <!-- This is the list view -->
-      <% sorted_entries.each do |entry| %>
+    <!-- We have to move last index position to front if today's creation div is skipped (line 20-55) -->
+      <% if @home == "index" %>
+        <% sorted_entries = sorted_entries.rotate(-1) %>
+      <% end %>
+      <%  sorted_entries.each do |entry| %>
           <div class="carousel__entry">
-           <div class="entries-list">
-             <button class="edit">
-                Edit
-             </button>
-              <button class="save">
-                Save
-             </button>
-             <button class="cancel">
-                Cancel
-             </button>
-            <div class="subtitle">
-              <p>
-                <%= @user.name.capitalize %>'s Diary
-              </p>
-            </div>
-            <div class="wrapper">
-            <div class="divider div-transparent div-dot"></div>
-            </div>
-            <div class="date">
-              <h1>
-                <% entry_date = entry.date %>
-                <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
-                <%= entry_date %>
-              </h1>
-            </div>
-            <!-- Shows each entry -->
-            <div class="entry">
-              <%= entry.body.html_safe %>
-            </div>
-            <% if entry.updates.exists? %>
-              <% entry.updates.each do |update| %>
-                <div class="wrapper">
-                <div class="divider div-transparent"></div>
-                  <p> <%= update.body.html_safe %></p>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-12 col-lg-6 col-lg-offset-3">
+                 <div class="entries-list">
+                   <button class="edit">
+                      Edit
+                   </button>
+                    <button class="save">
+                      Save
+                   </button>
+                   <button class="cancel">
+                      Cancel
+                   </button>
+                  <div class="subtitle">
+                    <p>
+                      <%= @user.name.capitalize %>'s Diary
+                    </p>
+                  </div>
+                  <div class="wrapper">
+                  <div class="divider div-transparent div-dot"></div>
+                  </div>
+                  <div class="date">
+                    <h1>
+                      <% entry_date = entry.date %>
+                      <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
+                      <%= entry_date %>
+                    </h1>
+                  </div>
+                  <!-- Shows each entry -->
+                  <div class="entry">
+                    <%= entry.body.html_safe %>
+                  </div>
+                  <% if entry.updates.exists? %>
+                    <% entry.updates.each do |update| %>
+                      <div class="wrapper">
+                      <div class="divider div-transparent"></div>
+                        <p> <%= update.body.html_safe %></p>
+                      </div>
+                    <% end %>
+                  <% end %>
+                  <div class="toggle">
+                    <div class="wrapper">
+                    <div class="divider div-transparent"></div>
+                    </div>
+                    <div class="entry">
+                    <p contenteditable="true" class="tab">&nbsp;</p>
+                    </div>
+                  </div>
+                  <div class="margin2"></div>
                 </div>
-              <% end %>
-            <% end %>
-            <div class="toggle">
-              <div class="wrapper">
-              <div class="divider div-transparent"></div>
-              </div>
-              <div class="entry">
-              <p contenteditable="true" class="tab">&nbsp;</p>
               </div>
             </div>
-            <div class="margin2"></div>
           </div>
         </div>
       <% end %>
@@ -141,7 +170,6 @@ var textHeight = 902
 function yourFunction(){
 
     var docHeight = document.getElementsByClassName("entries")[0].clientHeight;
-    console.log(docHeight);
     var difference = textHeight - docHeight;
     // if (difference > 29) {
     //   textHeight = docHeight + 2
@@ -186,7 +214,9 @@ yourFunction()
 
     // Target the last, initial, and next items and give them the relevant class.
     // This assumes there are three or more items.
+    <% if user_signed_in? && @user.entries.length > 1  %>
     items[totalItems - 1].classList.add("prev");
+    <% end %>
     items[0].classList.add("active");
     items[1].classList.add("next");
   }
@@ -305,19 +335,22 @@ yourFunction()
     moving = false;
   }
 
-<% if user_signed_in? %>
+// carousel is only initiated if the user has entries and is signed in
+<% if user_signed_in? && @user.entries.exists?  %>
   // make it rain
   initCarousel();
 
-d.addEventListener('keydown', logKey);
+  // d.addEventListener('keydown', logKey);
 
-function logKey(e) {
-  if (e.code === "ArrowRight"){
-    moveNext()
-  } else if (e.code === "ArrowLeft") {
-    movePrev();
-  };
-}
+  // if(!moving)
+
+  // function logKey(e) {
+  //   if (e.code === "ArrowRight"){
+  //     moveNext()
+  //   } else if (e.code === "ArrowLeft") {
+  //     movePrev();
+  //   };
+  // }
 
 }(document));
 
