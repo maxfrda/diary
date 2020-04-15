@@ -121,9 +121,11 @@
   </div>
 </div>
     <% if user_signed_in? %>
-      <div class="carousel__button--next"></div>
-      <div class="carousel__button--prev"></div>
       <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+      <% if @user.entries.count > 1 %>
+        <div class="carousel__button--next"></div>
+        <div class="carousel__button--prev"></div>
+      <% end %>
     <% end %>
 
 <!-- Javascript injects content into this form and saves it as an entry instance -->
@@ -149,9 +151,10 @@ clickTag(p);
   document.getElementById("save").onclick = myFunction;
   function myFunction() {
     var input = document.getElementById("entry_body");
-    var content = document.getElementsByClassName("tab");
+    var content = document.getElementsByClassName("tab"); // gets all items with class name tag and creates array
     var finalContent = '';
-    for (i = 0; i < content.length; i++) {
+    console.log(content.length);
+    for (i = 0; i < (content.length + 1) - (content.length); i++) { // filters out tabs that are in other entries
       var p = document.getElementsByClassName("tab")[i].innerHTML;
       finalContent += `${p} <br>`;
     };
@@ -197,9 +200,9 @@ yourFunction()
 
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-!(function(d){
+  !(function(d){
   // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
   var itemClassName = "carousel__entry";
       items = d.getElementsByClassName(itemClassName),
@@ -339,8 +342,8 @@ yourFunction()
     moving = false;
   }
 
-// carousel is only initiated if the user has entries and is signed in
-<% if user_signed_in? && @user.entries.exists?  %>
+  // carousel is only initiated if the user has entries and is signed in
+  <% if user_signed_in? && @user.entries.exists?  %>
   // make it rain
   initCarousel();
 
@@ -356,13 +359,15 @@ yourFunction()
   //   };
   // }
 
-}(document));
+  }(document));
 
-</script>
+  </script>
 
-<% end %>
+  <% end %>
 
 <script>
+
+
   var edit = $("button.edit");
   var save = $("button.save");
   var cancel = $("button.cancel");
