@@ -152,10 +152,11 @@ body {
 }
 
 .entries{
+
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   margin: 10px auto;
   padding: 10px;
-  width: 45%;
+  width: 95%;
   min-height: 900px;
   /* or height: 9.5in; */
   background-color: white;
@@ -165,7 +166,7 @@ body {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   margin: 10px auto;
   padding: 10px;
-  width: 45%;
+  width: 95%;
   min-height: 900px;
   /* or height: 9.5in; */
   background-color: white;
@@ -270,7 +271,7 @@ i {
 
 .carousel-wrapper {
   overflow: hidden;
-  width: 90%;
+  width: 100%;
 }
 
 .carousel-wrapper * {
@@ -304,6 +305,7 @@ i {
 .carousel__entry.next {
   z-index: 800;
 }
+
 .carousel__entry.prev {
   transform: translateX(-100%); /* Move 'prev' item to the left */
 }

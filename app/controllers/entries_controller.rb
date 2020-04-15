@@ -34,7 +34,7 @@ class EntriesController < ApplicationController
 
     if
       @entry.save
-      redirect_to entries_path
+      redirect_to root_path
     else
       redirect_to new_user_registration_path
   end
