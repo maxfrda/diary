@@ -4,6 +4,8 @@ class EntriesController < ApplicationController
     @entry = Entry.new
     @entries = Entry.all
     @user = current_user
+    @update = Update.new
+
   end
 
   def index
@@ -24,6 +26,8 @@ class EntriesController < ApplicationController
     @update.date = Date.today.strftime
     if @update.save
     redirect_to root_path
+  else
+    redirect_to entries_path
     end
   end
 

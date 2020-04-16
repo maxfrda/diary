@@ -122,17 +122,26 @@
 </div>
     <% if user_signed_in? %>
       <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-      <% if @user.entries.count > 1 %>
+      <% if @user.entries.count > 0 %>
         <div class="carousel__button--next"></div>
         <div class="carousel__button--prev"></div>
       <% end %>
     <% end %>
+
+
+<!-- form for updating an entry -->
+<%= form_for @update, :url => entry_path(entry) do |f| %>
+<%= f.text_field :body, class: "update_body" %>
+<%= f.button :submit, class: "update_button" %>
+<% end %>
 
 <!-- Javascript injects content into this form and saves it as an entry instance -->
 <%= form_for @entry do |f| %>
 <%= f.text_field :body, id: "entry_body" %>
 <%= f.button :submit, id: "button" %>
 <% end %>
+
+
 
 <!--  clicks the tag so that cursor shows up -->
 <script >
@@ -361,9 +370,9 @@ yourFunction()
 
   }(document));
 
+  <% end %>
   </script>
 
-  <% end %>
 
 <script>
 
@@ -392,3 +401,21 @@ yourFunction()
 
 </script>
 
+<script>
+    update_button= $("button.update_button");
+    $("button.save").click(function() {
+      console.log("success");
+      var input = document.getElementById("update_body");
+      var content = $("div.carousel__entry.active div.toggle p.tab"); // gets all items with class name tag and creates array
+      var finalContent = '';
+      console.log(content.length);
+      for (i = 0; i < (content.length + 1) - (content.length); i++) { // filters out tabs that are in other entries
+        var p = $("div.carousel__entry.active div.toggle p.tab")[i].innerHTML;
+        finalContent += `${p} <br>`;
+      };
+      input.value = (finalContent);
+      var number = $("div.carousel__entry.active div.entries-list p.number")[0].innerHTML;
+     update_button.click();
+  });
+
+</script>
