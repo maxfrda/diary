@@ -112,6 +112,12 @@
                   </div>
                   <div class="margin2"></div>
                 </div>
+
+                  <%= form_for @update, :url => entry_path(entry.id), remote:true  do |f| %>
+                  <%= f.text_field :body, class: "update_body" %>
+                  <%= f.button :submit, class: "update_button" %>
+                  <% end %>
+
               </div>
             </div>
           </div>
@@ -130,10 +136,7 @@
 
 
 <!-- form for updating an entry -->
-<%= form_for @update, :url => entry_path(entry) do |f| %>
-<%= f.text_field :body, class: "update_body" %>
-<%= f.button :submit, class: "update_button" %>
-<% end %>
+
 
 <!-- Javascript injects content into this form and saves it as an entry instance -->
 <%= form_for @entry do |f| %>
@@ -376,7 +379,7 @@ yourFunction()
 
 <script>
 
-
+  var form = $("div.update")
   var edit = $("button.edit");
   var save = $("button.save");
   var cancel = $("button.cancel");
@@ -385,6 +388,7 @@ yourFunction()
     edit.hide();
     save.show();
     cancel.show();
+    form.show();
     var parent =  $("div.carousel__entry.active div.toggle");
     parent.toggle();
     $("div.carousel__entry.active div.toggle p.tab").focus();
@@ -402,8 +406,8 @@ yourFunction()
 </script>
 
 <script>
-    update_button= $("button.update_button");
     $("button.save").click(function() {
+    var update_button= $("div.carousel__entry.active button.update_button");
       console.log("success");
       var input = document.getElementById("update_body");
       var content = $("div.carousel__entry.active div.toggle p.tab"); // gets all items with class name tag and creates array
@@ -414,7 +418,6 @@ yourFunction()
         finalContent += `${p} <br>`;
       };
       input.value = (finalContent);
-      var number = $("div.carousel__entry.active div.entries-list p.number")[0].innerHTML;
      update_button.click();
   });
 

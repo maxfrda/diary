@@ -1,0 +1,5 @@
+<%= form_for @update, :url => entry_path(entry.id), remote:true  do |f| %>
+<%= f.text_field :body, class: "update_body" %>
+<%= f.button :submit, class: "update_button" %>
+<% end %>
+<%= entry.id %>
