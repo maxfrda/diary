@@ -65,67 +65,62 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-12 col-lg-6 col-lg-offset-3">
-                 <div class="entries-list">
-                   <button class="edit">
+                  <div class="entries-list">
+                    <button class="edit">
                       Edit
-                   </button>
+                    </button>
                     <button class="save">
                       Save
-                   </button>
-                   <button class="cancel">
+                    </button>
+                    <button class="cancel">
                       Cancel
-                   </button>
-                  <div class="subtitle">
-                    <p>
-                      <%= @user.name.capitalize %>'s Diary
-                    </p>
-                  </div>
-                  <div class="wrapper">
-                  <div class="divider div-transparent div-dot"></div>
-                  </div>
-                  <div class="date">
-                    <h1>
-                      <% entry_date = entry.date %>
-                      <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
-                      <%= entry_date %>
-                    </h1>
-                  </div>
-                  <!-- Shows each entry -->
-                  <div class="entry">
-                    <%= entry.body.html_safe %>
-                  </div>
-                  <% if entry.updates.exists? %>
-                    <% entry.updates.each do |update| %>
-                      <div class="wrapper">
-                      <div class="divider div-transparent"></div>
-                        <p> <%= update.body.html_safe %></p>
-                      </div>
-                    <% end %>
-                  <% end %>
-                  <div class="toggle">
+                    </button>
+                    <div class="subtitle">
+                      <p>
+                        <%= @user.name.capitalize %>'s Diary
+                      </p>
+                    </div>
                     <div class="wrapper">
-                    <div class="divider div-transparent"></div>
+                      <div class="divider div-transparent div-dot"></div>
                     </div>
+                    <div class="date">
+                      <h1>
+                        <% entry_date = entry.date %>
+                        <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
+                        <%= entry_date %>
+                      </h1>
+                    </div>
+                    <!-- Shows each entry -->
                     <div class="entry">
-                    <p contenteditable="true" class="tab">&nbsp;</p>
+                      <%= entry.body.html_safe %>
                     </div>
+                    <% if entry.updates.exists? %>
+                      <% entry.updates.each do |update| %>
+                        <div class="wrapper">
+                          <div class="divider div-transparent"></div>
+                          <p> <%= update.body.html_safe %></p>
+                        </div>
+                      <% end %>
+                    <% end %>
+                    <div class="toggle">
+                      <div class="wrapper">
+                        <div class="divider div-transparent"></div>
+                      </div>
+                      <div class="entry">
+                        <p contenteditable="true" class="tab">&nbsp;</p>
+                      </div>
+                    </div>
+                    <div class="margin2"></div>
+                    <div class="update-id"><%= entry.id %></div>
                   </div>
-                  <div class="margin2"></div>
                 </div>
-
-                  <%= form_for @update, :url => entry_path(entry.id), remote:true  do |f| %>
-                  <%= f.text_field :body, class: "update_body" %>
-                  <%= f.button :submit, class: "update_button" %>
-                  <% end %>
-
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div>
     <% if user_signed_in? %>
       <%= link_to "Log out", destroy_user_session_path, method: :delete %>
       <% if @user.entries.count > 0 %>
@@ -136,6 +131,10 @@
 
 
 <!-- form for updating an entry -->
+<form name="updateForm" class="new_update" id="new_update" onSubmit="formAction(this)" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
+  <input id="update_body" type="text" name="update[body]">
+  <button name="button" type="submit" id="update_button">submit</button>
+</form>
 
 
 <!-- Javascript injects content into this form and saves it as an entry instance -->
@@ -406,8 +405,21 @@ yourFunction()
 </script>
 
 <script>
+
+var edit = $("button.edit");
+
+function formAction()
+  {
+    var id = $("div.carousel__entry.active div.update-id").html();
+    document.updateForm.action = `/entries/${id}`;
+}
+edit.click(formAction);
+
+</script>
+
+<script>
     $("button.save").click(function() {
-    var update_button= $("div.carousel__entry.active button.update_button");
+    var update_button= document.getElementById("update_button");
       console.log("success");
       var input = document.getElementById("update_body");
       var content = $("div.carousel__entry.active div.toggle p.tab"); // gets all items with class name tag and creates array
@@ -422,3 +434,4 @@ yourFunction()
   });
 
 </script>
+

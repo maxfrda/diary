@@ -31,7 +31,7 @@
   visibility: hidden;
 }
 
-.update_button {
+#update_button {
   visibility: hidden;
 }
 
@@ -42,7 +42,7 @@
   visibility: hidden;
 }
 
-.update_body {
+#update_body {
   visibility: hidden;
 }
 /* line 31, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
@@ -361,3 +361,6 @@ i {
 }
 
 
+.update-id{
+  visibility: hidden;
+}
