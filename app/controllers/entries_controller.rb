@@ -26,9 +26,7 @@ class EntriesController < ApplicationController
     @update.date = Date.today.strftime
 
     if @update.save
-    redirect_to root_path
-  else
-    redirect_to entries_path
+      redirect_to root_path
     end
   end
 

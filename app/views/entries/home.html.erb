@@ -96,18 +96,18 @@
                     </div>
                     <% if entry.updates.exists? %>
                       <% entry.updates.each do |update| %>
-                        <div class="wrapper">
-                          <div class="divider div-transparent"></div>
-                          <p> <%= update.body.html_safe %></p>
-                        </div>
+                          <% update_date = update.date %>
+                          <% update_date = Date.parse(update_date).strftime("%m/%d/%Y") %>
+                          <p class="update-date ">Updated on <%= update_date %></p>
+                          <p class="entry spacing"> <%= update.body.html_safe %></p>
                       <% end %>
                     <% end %>
                     <div class="toggle">
                       <div class="wrapper">
                         <div class="divider div-transparent"></div>
                       </div>
-                      <div class="entry">
-                        <p contenteditable="true" class="tab">&nbsp;</p>
+                      <div contenteditable="true" class="entry">
+                        <p class="tab">&nbsp;</p>
                       </div>
                     </div>
                     <div class="margin2"></div>
@@ -159,14 +159,14 @@ clickTag(p);
 <!-- injects contents of p tag into form and submits -->
 <script >
 
+
   document.getElementById("save").onclick = myFunction;
   function myFunction() {
     var input = document.getElementById("entry_body");
-    var content = document.getElementsByClassName("tab"); // gets all items with class name tag and creates array
+    var content = $("div.carousel__entry.active p.tab");
     var finalContent = '';
-    console.log(content.length);
-    for (i = 0; i < (content.length + 1) - (content.length); i++) { // filters out tabs that are in other entries
-      var p = document.getElementsByClassName("tab")[i].innerHTML;
+    for (i = 0; i < content.length; i++) {
+      var p = $("div.carousel__entry.active p.tab")[i].innerHTML;
       finalContent += `${p} <br>`;
     };
     input.value = (finalContent);
@@ -390,7 +390,7 @@ yourFunction()
     form.show();
     var parent =  $("div.carousel__entry.active div.toggle");
     parent.toggle();
-    $("div.carousel__entry.active div.toggle p.tab").focus();
+    $("div.carousel__entry.active div.entry p.tab").focus();
     //toggles edit back on
     cancel.click(function(){
       console.log("test")
@@ -408,6 +408,7 @@ yourFunction()
 
 var edit = $("button.edit");
 
+// changes form action dynamically depending on item entry number.
 function formAction()
   {
     var id = $("div.carousel__entry.active div.update-id").html();
@@ -417,15 +418,17 @@ edit.click(formAction);
 
 </script>
 
+<!-- this script injects content into update form -->
 <script>
+
     $("button.save").click(function() {
     var update_button= document.getElementById("update_button");
       console.log("success");
       var input = document.getElementById("update_body");
-      var content = $("div.carousel__entry.active div.toggle p.tab"); // gets all items with class name tag and creates array
+      var content = $("div.carousel__entry.active div.entry p.tab"); // gets all items with class name tag and creates array
       var finalContent = '';
       console.log(content.length);
-      for (i = 0; i < (content.length + 1) - (content.length); i++) { // filters out tabs that are in other entries
+      for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
         var p = $("div.carousel__entry.active div.toggle p.tab")[i].innerHTML;
         finalContent += `${p} <br>`;
       };
