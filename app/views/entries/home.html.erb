@@ -65,66 +65,77 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-12 col-lg-6 col-lg-offset-3">
-                 <div class="entries-list">
-                   <button class="edit">
+                  <div class="entries-list">
+                    <button class="edit">
                       Edit
-                   </button>
+                    </button>
                     <button class="save">
                       Save
-                   </button>
-                   <button class="cancel">
+                    </button>
+                    <button class="cancel">
                       Cancel
-                   </button>
-                  <div class="subtitle">
-                    <p>
-                      <%= @user.name.capitalize %>'s Diary
-                    </p>
-                  </div>
-                  <div class="wrapper">
-                  <div class="divider div-transparent div-dot"></div>
-                  </div>
-                  <div class="date">
-                    <h1>
-                      <% entry_date = entry.date %>
-                      <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
-                      <%= entry_date %>
-                    </h1>
-                  </div>
-                  <!-- Shows each entry -->
-                  <div class="entry">
-                    <%= entry.body.html_safe %>
-                  </div>
-                  <% if entry.updates.exists? %>
-                    <% entry.updates.each do |update| %>
-                      <div class="wrapper">
-                      <div class="divider div-transparent"></div>
-                        <p> <%= update.body.html_safe %></p>
-                      </div>
-                    <% end %>
-                  <% end %>
-                  <div class="toggle">
+                    </button>
+                    <div class="subtitle">
+                      <p>
+                        <%= @user.name.capitalize %>'s Diary
+                      </p>
+                    </div>
                     <div class="wrapper">
-                    <div class="divider div-transparent"></div>
+                      <div class="divider div-transparent div-dot"></div>
                     </div>
+                    <div class="date">
+                      <h1>
+                        <% entry_date = entry.date %>
+                        <% entry_date = Date.parse(entry_date).strftime("%m/%d/%Y") %>
+                        <%= entry_date %>
+                      </h1>
+                    </div>
+                    <!-- Shows each entry -->
                     <div class="entry">
-                    <p contenteditable="true" class="tab">&nbsp;</p>
+                      <%= entry.body.html_safe %>
                     </div>
+                    <% if entry.updates.exists? %>
+                      <% entry.updates.each do |update| %>
+                          <% update_date = update.date %>
+                          <% update_date = Date.parse(update_date).strftime("%m/%d/%Y") %>
+                          <p class="update-date ">Updated on <%= update_date %></p>
+                          <p class="entry spacing"> <%= update.body.html_safe %></p>
+                      <% end %>
+                    <% end %>
+                    <div class="toggle">
+                      <div class="wrapper">
+                        <div class="divider div-transparent"></div>
+                      </div>
+                      <div contenteditable="true" class="entry">
+                        <p class="tab">&nbsp;</p>
+                      </div>
+                    </div>
+                    <div class="margin2"></div>
+                    <div class="update-id"><%= entry.id %></div>
                   </div>
-                  <div class="margin2"></div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+    <% if user_signed_in? %>
+      <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+      <% if @user.entries.count > 0 %>
+        <div class="carousel__button--next"></div>
+        <div class="carousel__button--prev"></div>
       <% end %>
     <% end %>
-  </div>
-</div>
-    <% if user_signed_in? %>
-      <div class="carousel__button--next"></div>
-      <div class="carousel__button--prev"></div>
-      <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-    <% end %>
+
+
+<!-- form for updating an entry -->
+<form name="updateForm" class="new_update" id="new_update" onSubmit="formAction(this)" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
+  <input id="update_body" type="text" name="update[body]">
+  <button name="button" type="submit" id="update_button">submit</button>
+</form>
+
 
 <!-- Javascript injects content into this form and saves it as an entry instance -->
 <%= form_for @entry do |f| %>
@@ -132,11 +143,12 @@
 <%= f.button :submit, id: "button" %>
 <% end %>
 
+
+
 <!--  clicks the tag so that cursor shows up -->
 <script >
 var p = document.getElementsByClassName("entry")[0];
 function clickTag(paragraph) {
-  console.log(paragraph);
   paragraph.focus(); // Click on the checkbox
 
 }
@@ -146,13 +158,14 @@ clickTag(p);
 <!-- injects contents of p tag into form and submits -->
 <script >
 
+
   document.getElementById("save").onclick = myFunction;
   function myFunction() {
     var input = document.getElementById("entry_body");
-    var content = document.getElementsByClassName("tab");
+    var content = $("div.carousel__entry.active p.tab");
     var finalContent = '';
     for (i = 0; i < content.length; i++) {
-      var p = document.getElementsByClassName("tab")[i].innerHTML;
+      var p = $("div.carousel__entry.active p.tab")[i].innerHTML;
       finalContent += `${p} <br>`;
     };
     input.value = (finalContent);
@@ -197,9 +210,9 @@ yourFunction()
 
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-!(function(d){
+  !(function(d){
   // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
   var itemClassName = "carousel__entry";
       items = d.getElementsByClassName(itemClassName),
@@ -339,8 +352,8 @@ yourFunction()
     moving = false;
   }
 
-// carousel is only initiated if the user has entries and is signed in
-<% if user_signed_in? && @user.entries.exists?  %>
+  // carousel is only initiated if the user has entries and is signed in
+  <% if user_signed_in? && @user.entries.exists?  %>
   // make it rain
   initCarousel();
 
@@ -356,13 +369,14 @@ yourFunction()
   //   };
   // }
 
-}(document));
+  }(document));
 
-</script>
+  <% end %>
+  </script>
 
-<% end %>
 
 <script>
+
   var edit = $("button.edit");
   var save = $("button.save");
   var cancel = $("button.cancel");
@@ -373,7 +387,8 @@ yourFunction()
     cancel.show();
     var parent =  $("div.carousel__entry.active div.toggle");
     parent.toggle();
-    $("div.carousel__entry.active div.toggle p.tab").focus();
+    $("div.carousel__entry.active div.entry").focus();
+    console.log("focusing");
     //toggles edit back on
     cancel.click(function(){
       console.log("test")
@@ -384,6 +399,40 @@ yourFunction()
     });
   });
 
+
+</script>
+
+<script>
+
+var edit = $("button.edit");
+
+// changes form action dynamically depending on item entry number.
+function formAction()
+  {
+    var id = $("div.carousel__entry.active div.update-id").html();
+    document.updateForm.action = `/entries/${id}`;
+}
+edit.click(formAction);
+
+</script>
+
+<!-- this script injects content into update form -->
+<script>
+
+    $("button.save").click(function() {
+    var update_button= document.getElementById("update_button");
+      console.log("success");
+      var input = document.getElementById("update_body");
+      var content = $("div.carousel__entry.active div.entry p.tab"); // gets all items with class name tag and creates array
+      var finalContent = '';
+      console.log(content.length);
+      for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
+        var p = $("div.carousel__entry.active div.toggle p.tab")[i].innerHTML;
+        finalContent += `${p} <br>`;
+      };
+      input.value = (finalContent);
+     update_button.click();
+  });
 
 </script>
 

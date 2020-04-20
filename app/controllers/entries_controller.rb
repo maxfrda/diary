@@ -4,6 +4,8 @@ class EntriesController < ApplicationController
     @entry = Entry.new
     @entries = Entry.all
     @user = current_user
+    @update = Update.new
+
   end
 
   def index
@@ -22,8 +24,9 @@ class EntriesController < ApplicationController
     @entry = Entry.find(params[:id])
     @update.entry = @entry
     @update.date = Date.today.strftime
+
     if @update.save
-    redirect_to root_path
+      redirect_to root_path
     end
   end
 
@@ -31,6 +34,7 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params)
     @entry.date = Date.today.strftime
     @entry.user = current_user
+
 
     if
       @entry.save
