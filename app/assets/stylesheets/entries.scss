@@ -417,13 +417,14 @@ i {
   cursor: pointer;
   z-index: 1001;
   /* Sit on top of everything */
-  border: 1px solid black;
+  border: 1px solid #DAA520;
 }
 
 /* line 350, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 /* line 384, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__button--prev {
   left: 0;
+
 }
 
 /* line 353, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
@@ -442,8 +443,8 @@ i {
   height: 10px;
   top: 50%;
   left: 54%;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
+  border-right: 2px solid #DAA520;
+  border-bottom: 2px solid #DAA520;
   -webkit-transform: translate(-50%, -50%) rotate(135deg);
   transform: translate(-50%, -50%) rotate(135deg);
 }

@@ -149,7 +149,6 @@
 <script >
 var p = document.getElementsByClassName("entry")[0];
 function clickTag(paragraph) {
-  console.log(paragraph);
   paragraph.focus(); // Click on the checkbox
 
 }
@@ -378,7 +377,6 @@ yourFunction()
 
 <script>
 
-  var form = $("div.update")
   var edit = $("button.edit");
   var save = $("button.save");
   var cancel = $("button.cancel");
@@ -387,10 +385,10 @@ yourFunction()
     edit.hide();
     save.show();
     cancel.show();
-    form.show();
     var parent =  $("div.carousel__entry.active div.toggle");
     parent.toggle();
-    $("div.carousel__entry.active div.entry p.tab").focus();
+    $("div.carousel__entry.active div.entry").focus();
+    console.log("focusing");
     //toggles edit back on
     cancel.click(function(){
       console.log("test")
