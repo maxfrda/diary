@@ -2,6 +2,7 @@
   "name": "diary",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "@rails/webpacker": "4.2.2"
   },
   "devDependencies": {

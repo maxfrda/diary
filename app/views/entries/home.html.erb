@@ -22,6 +22,10 @@
         <div class="row">
           <div class="col-sm-12 col-lg-6 col-lg-offset-3">
             <div class="entries">
+              <%= render 'shared/dropdown' %>
+              <button id="save">
+                Save
+              </button>
               <div class="subtitle">
                 <p>
                   <% if user_signed_in?%>
@@ -51,9 +55,6 @@
                 <p>- <%= page %> -</p>
                 <% page += 1 %>
               </div>
-              <button id="save">
-                Save
-              </button>
             </div>
           </div>
         </div>
@@ -73,6 +74,7 @@
               <div class="row">
                 <div class="col-sm-12 col-lg-6 col-lg-offset-3">
                   <div class="entries-list">
+                    <%= render 'shared/dropdown' %>
                     <button class="edit">
                       Edit
                     </button>
@@ -447,4 +449,47 @@ edit.click(formAction);
   });
 
 </script>
+
+<!-- DROPDOWN CODE -->
+
+<script>
+
+//makes the variables globally available
+
+function updateVariables() {
+
+  window.dropdown = $("div.carousel__entry.active div.dropdown-child")[0];
+  window.dots = $("div.carousel__entry.active span.fa-ellipsis-v")[0];
+};
+
+//will update variables and toggleOff the dropdown menu
+function toggleOff(){
+
+  updateVariables();
+
+   dropdown.style.display = "none";
+   dots.style.opacity = "20%";
+
+};
+
+//  will update variables and shows the drop down menu and changes background color of bubble
+function toggle() {
+
+  updateVariables();
+
+
+  if (dropdown.style.display !== "block") {
+    dropdown.style.display = "block";
+    dots.style.opacity = "80%";
+
+  } else {
+
+    toggleOff();
+
+  };
+};
+
+
+</script>
+
 

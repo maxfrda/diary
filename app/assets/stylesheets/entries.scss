@@ -1,8 +1,5 @@
-/* line 6, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
-/* line 3, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
-/* line 4, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
-/* line 5, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 6, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
+@import "dropdown";
+
 [contenteditable="true"]:active,
 [contenteditable="true"]:focus {
   border: none;
@@ -83,10 +80,9 @@
   border: none;
   width: 80px;
   height: 30px;
-  float: left;
-  position: absolute;
-  top: 2%;
-  right: 22%;
+  float: right;
+  position: relative;
+  display: inline-block;
 }
 
 /* line 77, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
