@@ -150,15 +150,7 @@
 /* line 58, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 129, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 /* line 139, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-.document {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  margin: 10px auto;
-  padding: 10px;
-  width: 45%;
-  min-height: 900px;
-  /* or height: 9.5in; */
-  background-color: white;
-}
+
 
 /* line 56, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
 /* line 56, /home/max/code/maxfrda/diary/diary/app/assets/stylesheets/entries.scss */
@@ -201,7 +193,7 @@ body {
 /* line 170, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 /* line 184, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .margin2 {
-  margin-bottom: 50px;
+  margin-bottom: 200px;
 }
 
 /* line 174, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
@@ -242,6 +234,8 @@ body {
   height: 1px;
 }
 
+//
+
 /* line 210, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 /* line 223, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .div-transparent:before {
@@ -270,6 +264,20 @@ body {
   border: 1px solid #303133;
   border-radius: 50%;
   box-shadow: inset 0 0 0 2px white, 0 0 0 4px white;
+}
+
+.div-stopper:after
+{
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -6px;
+  left: calc(50% - 7px);
+  width: 14px;
+  height: 12px;
+  background-color: white;
+  border-left: 1px solid rgb(48,49,51);
+  border-right: 1px solid rgb(48,49,51);
 }
 
 /* line 239, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
@@ -354,8 +362,6 @@ i {
   transform-style: preserve-3d;
 }
 
-/* line 306, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 324, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__entry {
   opacity: 0;
   position: absolute;
@@ -370,8 +376,6 @@ i {
   transition: transform .5s, opacity .5s, z-index .5s, -webkit-transform .5s;
 }
 
-/* line 317, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 339, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__entry.initial,
 .carousel__entry.active {
   opacity: 1;
@@ -379,31 +383,23 @@ i {
   z-index: 900;
 }
 
-/* line 325, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 347, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__entry.prev,
 .carousel__entry.next {
   z-index: 800;
 }
 
-/* line 330, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 353, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__entry.prev {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   /* Move 'prev' item to the left */
 }
 
-/* line 333, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 360, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__entry.next {
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
   /* Move 'next' item to the right */
 }
 
-/* line 337, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 367, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__button--prev,
 .carousel__button--next {
   position: absolute;
@@ -420,21 +416,15 @@ i {
   border: 1px solid #DAA520;
 }
 
-/* line 350, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 384, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__button--prev {
   left: 0;
 
 }
 
-/* line 353, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 389, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__button--next {
   right: 0;
 }
 
-/* line 356, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 394, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__button--prev::after,
 .carousel__button--next::after {
   content: " ";
@@ -449,22 +439,35 @@ i {
   transform: translate(-50%, -50%) rotate(135deg);
 }
 
-/* line 368, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 409, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__button--next::after {
   left: 47%;
   -webkit-transform: translate(-50%, -50%) rotate(-45deg);
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-/* line 373, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 416, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .toggle {
   display: none;
 }
 
-/* line 378, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
-/* line 421, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .update-id {
   visibility: hidden;
+}
+
+.count {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  font-size: 36px;
+  font-family: 'Tangerine', cursive;
+}
+
+.update-padding {
+  padding-bottom: 150px;
+}
+
+.dot {
+  height: 5px;
+  width: 5px;
+  background-color: black;
+  border-radius: 50%;
 }

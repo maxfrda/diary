@@ -9,6 +9,9 @@
       <% end %>
     <% end %>
 
+<!-- sets counter for pages -->
+    <% page = 1 %>
+
 <!-- This is the document that the user types in to create entry -->
 <div class="carousel-wrapper">
   <div class="carousel">
@@ -44,6 +47,10 @@
                 <p class="tab">&nbsp;</p>
               </div>
               <div class="margin"></div>
+              <div class="count">
+                <p>- <%= page %> -</p>
+                <% page += 1 %>
+              </div>
               <button id="save">
                 Save
               </button>
@@ -106,11 +113,16 @@
                       <div class="wrapper">
                         <div class="divider div-transparent"></div>
                       </div>
-                      <div contenteditable="true" class="entry">
+                      <div contenteditable="true" class="entry update-padding">
                         <p class="tab">&nbsp;</p>
                       </div>
                     </div>
                     <div class="margin2"></div>
+
+                    <div class="count">
+                      <p>- <%= page %> -</p>
+                    </div>
+                    <% page += 1 %>
                     <div class="update-id"><%= entry.id %></div>
                   </div>
                 </div>
