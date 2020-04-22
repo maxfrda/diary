@@ -22,7 +22,8 @@
         <div class="row">
           <div class="col-sm-12 col-lg-6 col-lg-offset-3">
             <div class="entries">
-              <%= render 'shared/dropdown' %>
+              <%= render :partial => 'shared/dropdown' %>
+
               <button id="save">
                 Save
               </button>
@@ -74,10 +75,11 @@
               <div class="row">
                 <div class="col-sm-12 col-lg-6 col-lg-offset-3">
                   <div class="entries-list">
-                    <%= render 'shared/dropdown' %>
-                    <button class="edit">
-                      Edit
-                    </button>
+
+                    <!-- resets this variable so that dropdown works -->
+                  <% @home = "index" %>
+                  <%= render :partial => 'shared/dropdown', locals: {entry: entry} %>
+
                     <button class="save">
                       Save
                     </button>
@@ -391,11 +393,12 @@ yourFunction()
 
 <script>
 
-  var edit = $("button.edit");
+  var edit = $("a.edit");
   var save = $("button.save");
   var cancel = $("button.cancel");
   // toggles edit off
   edit.click(function(){
+    toggleOff();
     edit.hide();
     save.show();
     cancel.show();

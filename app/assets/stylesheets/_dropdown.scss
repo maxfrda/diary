@@ -34,10 +34,6 @@
 
 }
 
-a:hover{
-    background: rgb(230,230,230);
-
-}
 
 .fa-ellipsis-v{
   opacity: 20%;
@@ -57,7 +53,7 @@ a:hover{
 
 .ellipses:hover > .fa-ellipsis-v{
 
-  opacity: 80%;
+  opacity: 80% !important;
 
 
 }

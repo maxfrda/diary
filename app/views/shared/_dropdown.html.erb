@@ -4,8 +4,12 @@
      <span class="fas fa-ellipsis-v"> </span>
       </div>
       <div class="dropdown-child">
-        <a href="http://wwww.yourdomain.com/page1.html">Sub Menu 1</a>
-        <a href="http://wwww.yourdomain.com/page2.html">Sub Menu 2</a>
+        <a class="edit">Edit</a>
+        <!-- delete will only show on existing entries -->
+        <% if @home == "index" %>
+          <a><%= link_to "Delete", entry_path(entry.id), method: :delete, remote:true, data: {confirm: "Are you sure?"} %></a>
+        <% end %>
+
         <a href="http://wwww.yourdomain.com/page3.html">Sub Menu 3</a>
         <a href="http://wwww.yourdomain.com/page4.html">Sub Menu 4</a>
         <a href="http://wwww.yourdomain.com/page5.html">Sub Menu 5</a>

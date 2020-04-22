@@ -94,26 +94,24 @@
   border: none;
   width: 80px;
   height: 30px;
-  float: left;
-  position: absolute;
-  top: 2%;
-  right: 22%;
+  float: right;
+  position: relative;
   display: none;
 }
 
 /* line 91, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 /* line 99, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .edit {
-  color: white;
-  background-color: blue;
-  border-radius: 3px;
-  border: none;
-  width: 80px;
-  height: 30px;
-  position: absolute;
-  float: left;
-  top: 2%;
-  left: 22%;
+  // color: white;
+  // background-color: blue;
+  // border-radius: 3px;
+  // border: none;
+  // width: 80px;
+  // height: 30px;
+  // position: absolute;
+  // float: left;
+  // top: 2%;
+  // left: 22%;
 }
 
 /* line 104, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
@@ -122,13 +120,12 @@
   color: white;
   background-color: red;
   border-radius: 3px;
+  margin-right: 5px;
   border: none;
   width: 80px;
   height: 30px;
-  float: left;
-  position: absolute;
-  top: 2%;
-  left: 22%;
+  float: right;
+  position: relative;
   display: none;
 }
 
