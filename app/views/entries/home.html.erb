@@ -3,14 +3,24 @@
       <% sorted_entries = @user.entries.sort_by(&:created_at)%>
       <% sorted_entries.each do |entry| %>
         <% if entry.date == Date.today.strftime %>
+        <!-- this one means that todays entry exists -->
           <% @home = "index" %>
+          <!-- made specifically for page counter -->
+          <% @made = true %>
           <% break %>
         <% end %>
       <% end %>
     <% end %>
 
-<!-- sets counter for pages -->
-    <% page = 0 %>
+    <!-- sets counter for pages if not logged in, page will be 1 -->
+    <% if !user_signed_in? %>
+    <% page = 1 %>
+      <!-- has entries but no entry today. page will be last number -->
+    <% else @user.entries.exists? && @home != "index"  %>
+      <% page = sorted_entries.count + 1  %>
+      <% index_page = sorted_entries.count%>
+      <% count = 1 %>
+    <% end %>
 
 <!-- This is the document that the user types in to create entry -->
 <div class="carousel-wrapper">
@@ -51,12 +61,7 @@
               </div>
               <div class="margin"></div>
               <div class="count">
-              <% if !user_signed_in? || !@user.entries.exists? %>
-                <p>- <%= page + 1 %> -</p>
-                <% else %>
-                <p>- <%= sorted_entries.count + 1 %> -</p>
-              <% end %>
-              <% page += 1 %>
+                <p>- <%= page %> -</p>
               </div>
             </div>
           </div>
@@ -85,9 +90,9 @@
                       <p>
                         <%= @user.name.capitalize %>'s Diary
                       </p>
-                    </div>
-                    <div class="wrapper">
-                      <div class="divider div-transparent div-dot"></div>
+                      <div class="wrapper">
+                        <div class="divider div-transparent div-dot"></div>
+                      </div>
                     </div>
                     <div class="date">
                       <h1>
@@ -119,13 +124,15 @@
                     <div class="margin2"></div>
 
                     <div class="count">
-                      <% if page == 0 %>
-                        <p>- <%= 1 %> -</p>
-                      <% else %>
-                        <p>- <%= page %> -</p>
-                      <% end %>
+                    <% if @made == true %>
+                      <p>- <%= index_page%> -</p>
+                      <% index_page = count %>
+                        <% count += 1 %>
+                    <% else %>
+                      <p>- <%= count %> -</p>
+                        <% count += 1 %>
+                    <% end %>
                     </div>
-                    <% page += 1 %>
                     <div class="update-id"><%= entry.id %></div>
                   </div>
                 </div>
@@ -137,7 +144,6 @@
     </div>
   </div>
     <% if user_signed_in? %>
-      <%= link_to "Log out", destroy_user_session_path, method: :delete %>
       <% if page > 1 %>
         <div class="carousel__button--next"></div>
         <div class="carousel__button--prev"></div>
@@ -146,6 +152,7 @@
 
 
 <!-- form for updating an entry -->
+<div class="hideforms">
 <form name="updateForm" class="new_update" id="new_update" onSubmit="formAction(this)" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
   <input id="update_body" type="text" name="update[body]">
   <button name="button" type="submit" id="update_button">submit</button>
@@ -158,7 +165,7 @@
 <%= f.button :submit, id: "button" %>
 <% end %>
 
-
+</div>
 
 
 <!--  clicks the tag so that cursor shows up -->
@@ -254,8 +261,8 @@ yourFunction()
   // Set click events to navigation buttons
 
   function setEventListeners() {
-    var next = d.getElementsByClassName('carousel__button--next')[0],
-        prev = d.getElementsByClassName('carousel__button--prev')[0];
+     window.next = d.getElementsByClassName('carousel__button--next')[0];
+     window.prev = d.getElementsByClassName('carousel__button--prev')[0];
 
 
     next.addEventListener('click', moveNext);
@@ -265,9 +272,13 @@ yourFunction()
   // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
   function disableInteraction() {
     moving = true;
+    $("div.carousel__button--next").hide();
+    $("div.carousel__button--prev").hide();
 
     setTimeout(function(){
       moving = false
+      $("div.carousel__button--next").show();
+      $("div.carousel__button--prev").show();
     }, 500);
   }
 
@@ -284,6 +295,8 @@ yourFunction()
           newNext = slide + 1,
           oldPrevious = slide - 2,
           oldNext = slide + 2;
+
+
 
       // Test if carousel has more than three items
       // if ((totalItems - 1) > 3) {
@@ -369,25 +382,27 @@ yourFunction()
     moving = false;
   }
 
-  // carousel is only initiated if the user has entries and is signed in
 
   // make it rain
+
+  /*  d.addEventListener('keydown', arrowMove);
+
+    if(!moving)
+
+    function arrowMove(e) {
+        console.log("right");
+      if (e.code === "ArrowRight"){
+        moveNext()
+      } else if (e.code === "ArrowLeft") {
+        console.log("truck");
+        movePrev();
+      };
+    }*/
   initCarousel();
 
-  // d.addEventListener('keydown', logKey);
-
-  // if(!moving)
-
-  // function logKey(e) {
-  //   if (e.code === "ArrowRight"){
-  //     moveNext()
-  //   } else if (e.code === "ArrowLeft") {
-  //     movePrev();
-  //   };
-  // }
-
-
   }(document));
+
+
   </script>
 
 <script>
@@ -485,6 +500,8 @@ function editEntry() {
   parent.style.display = "block"
   destroy.style.display = "none";
   edit.style.display = "none";
+  prev.style.display = "none";
+  next.style.display = "none";
   update.focus();
   clicked = true;
 
@@ -503,6 +520,8 @@ function cancelEntry(){
   parent.style.display = "none"
   destroy.style.display = "block";
   edit.style.display = "block";
+  prev.style.display = "block";
+  next.style.display = "block";
 
     toggleOff();
 
@@ -524,4 +543,16 @@ function toggleOff(){
 
 </script>
 
+
+<script >
+  //makes it so tab key doesnt break app (disables it)
+document.addEventListener('keydown', logKey);
+
+ function logKey(e) {
+   if (e.code === "Tab"){
+     e.preventDefault();
+
+   };
+ };
+</script>
 
