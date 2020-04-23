@@ -13,6 +13,12 @@ class EntriesController < ApplicationController
     @entry = Entry.all
   end
 
+  def destroy
+    @entry = Entry.find(params[:id])
+    @entry.destroy
+    redirect_to root_path
+  end
+
   def show
     @entry = Entry.find(params[:id])
     @user = current_user

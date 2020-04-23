@@ -3,14 +3,24 @@
       <% sorted_entries = @user.entries.sort_by(&:created_at)%>
       <% sorted_entries.each do |entry| %>
         <% if entry.date == Date.today.strftime %>
+        <!-- this one means that todays entry exists -->
           <% @home = "index" %>
+          <!-- made specifically for page counter -->
+          <% @made = true %>
           <% break %>
         <% end %>
       <% end %>
     <% end %>
 
-<!-- sets counter for pages -->
+    <!-- sets counter for pages if not logged in, page will be 1 -->
+    <% if !user_signed_in? %>
     <% page = 1 %>
+      <!-- has entries but no entry today. page will be last number -->
+    <% else @user.entries.exists? && @home != "index"  %>
+      <% page = sorted_entries.count + 1  %>
+      <% index_page = sorted_entries.count%>
+      <% count = 1 %>
+    <% end %>
 
 <!-- This is the document that the user types in to create entry -->
 <div class="carousel-wrapper">
@@ -22,7 +32,10 @@
         <div class="row">
           <div class="col-sm-12 col-lg-6 col-lg-offset-3">
             <div class="entries">
-              <div class="subtitle">
+              <% if user_signed_in? %>
+                <%= render :partial => 'shared/dropdown' %>
+              <% end %>
+              <div class="subtitle" onclick="toggleOff()">
                 <p>
                   <% if user_signed_in?%>
                     <%= @user.name.capitalize %>'s Diary
@@ -44,16 +57,12 @@
               </div>
               <!-- This is where you enter text  -->
               <div contenteditable="true" class="entry">
-                <p class="tab">&nbsp;</p>
+                <p class="tab" onclick="toggleOff()">&nbsp;</p>
               </div>
               <div class="margin"></div>
               <div class="count">
                 <p>- <%= page %> -</p>
-                <% page += 1 %>
               </div>
-              <button id="save">
-                Save
-              </button>
             </div>
           </div>
         </div>
@@ -73,22 +82,17 @@
               <div class="row">
                 <div class="col-sm-12 col-lg-6 col-lg-offset-3">
                   <div class="entries-list">
-                    <button class="edit">
-                      Edit
-                    </button>
-                    <button class="save">
-                      Save
-                    </button>
-                    <button class="cancel">
-                      Cancel
-                    </button>
-                    <div class="subtitle">
+
+                    <!-- resets this variable so that dropdown works -->
+                  <% @home = "index" %>
+                  <%= render :partial => 'shared/dropdown', locals: {entry: entry} %>
+                    <div class="subtitle" onclick="toggleOff()">
                       <p>
                         <%= @user.name.capitalize %>'s Diary
                       </p>
-                    </div>
-                    <div class="wrapper">
-                      <div class="divider div-transparent div-dot"></div>
+                      <div class="wrapper">
+                        <div class="divider div-transparent div-dot"></div>
+                      </div>
                     </div>
                     <div class="date">
                       <h1>
@@ -114,15 +118,21 @@
                         <div class="divider div-transparent"></div>
                       </div>
                       <div contenteditable="true" class="entry update-padding">
-                        <p class="tab">&nbsp;</p>
+                        <p class="tab" onclick="toggleOff()">&nbsp;</p>
                       </div>
                     </div>
                     <div class="margin2"></div>
 
                     <div class="count">
-                      <p>- <%= page %> -</p>
+                    <% if @made == true %>
+                      <p>- <%= index_page%> -</p>
+                      <% index_page = count %>
+                        <% count += 1 %>
+                    <% else %>
+                      <p>- <%= count %> -</p>
+                        <% count += 1 %>
+                    <% end %>
                     </div>
-                    <% page += 1 %>
                     <div class="update-id"><%= entry.id %></div>
                   </div>
                 </div>
@@ -134,8 +144,7 @@
     </div>
   </div>
     <% if user_signed_in? %>
-      <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-      <% if @user.entries.count > 0 %>
+      <% if page > 1 %>
         <div class="carousel__button--next"></div>
         <div class="carousel__button--prev"></div>
       <% end %>
@@ -143,6 +152,7 @@
 
 
 <!-- form for updating an entry -->
+<div class="hideforms">
 <form name="updateForm" class="new_update" id="new_update" onSubmit="formAction(this)" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
   <input id="update_body" type="text" name="update[body]">
   <button name="button" type="submit" id="update_button">submit</button>
@@ -155,6 +165,7 @@
 <%= f.button :submit, id: "button" %>
 <% end %>
 
+</div>
 
 
 <!--  clicks the tag so that cursor shows up -->
@@ -250,8 +261,9 @@ yourFunction()
   // Set click events to navigation buttons
 
   function setEventListeners() {
-    var next = d.getElementsByClassName('carousel__button--next')[0],
-        prev = d.getElementsByClassName('carousel__button--prev')[0];
+     window.next = d.getElementsByClassName('carousel__button--next')[0];
+     window.prev = d.getElementsByClassName('carousel__button--prev')[0];
+
 
     next.addEventListener('click', moveNext);
     prev.addEventListener('click', movePrev);
@@ -260,9 +272,13 @@ yourFunction()
   // Disable interaction by setting 'moving' to true for the same duration as our transition (0.5s = 500ms)
   function disableInteraction() {
     moving = true;
+    $("div.carousel__button--next").hide();
+    $("div.carousel__button--prev").hide();
 
     setTimeout(function(){
       moving = false
+      $("div.carousel__button--next").show();
+      $("div.carousel__button--prev").show();
     }, 500);
   }
 
@@ -279,6 +295,8 @@ yourFunction()
           newNext = slide + 1,
           oldPrevious = slide - 2,
           oldNext = slide + 2;
+
+
 
       // Test if carousel has more than three items
       // if ((totalItems - 1) > 3) {
@@ -364,75 +382,66 @@ yourFunction()
     moving = false;
   }
 
-  // carousel is only initiated if the user has entries and is signed in
-  <% if user_signed_in? && @user.entries.exists?  %>
+
   // make it rain
+
+  /*  d.addEventListener('keydown', arrowMove);
+
+    if(!moving)
+
+    function arrowMove(e) {
+        console.log("right");
+      if (e.code === "ArrowRight"){
+        moveNext()
+      } else if (e.code === "ArrowLeft") {
+        console.log("truck");
+        movePrev();
+      };
+    }*/
   initCarousel();
-
-  // d.addEventListener('keydown', logKey);
-
-  // if(!moving)
-
-  // function logKey(e) {
-  //   if (e.code === "ArrowRight"){
-  //     moveNext()
-  //   } else if (e.code === "ArrowLeft") {
-  //     movePrev();
-  //   };
-  // }
 
   }(document));
 
-  <% end %>
-  </script>
 
+  </script>
 
 <script>
 
-  var edit = $("button.edit");
-  var save = $("button.save");
-  var cancel = $("button.cancel");
-  // toggles edit off
-  edit.click(function(){
-    edit.hide();
-    save.show();
-    cancel.show();
-    var parent =  $("div.carousel__entry.active div.toggle");
-    parent.toggle();
-    $("div.carousel__entry.active div.entry").focus();
-    console.log("focusing");
-    //toggles edit back on
-    cancel.click(function(){
-      console.log("test")
-      edit.show();
-      save.hide();
-      parent.toggle();
-      cancel.hide();
-    });
-  });
+//makes the variables globally available and makes sure they are updated whenever dropdown is pressed
 
+function updateVariables() {
+
+  window.dropdown = $("div.carousel__entry.active div.dropdown-child")[0];
+  window.dots = $("div.carousel__entry.active span.fa-ellipsis-v")[0];
+  window.edit = $("div.carousel__entry.active div.dropdown-child a.edit")[0];
+  window.save = $("div.carousel__entry.active div.dropdown-child a.save")[0];
+  window.cancel = $("div.carousel__entry.active div.dropdown-child a.cancel")[0];
+  window.destroy = $("div.carousel__entry.active div.dropdown-child a.delete")[0];
+  window.parent =  $("div.carousel__entry.active div.toggle")[0];
+  window.update = $("div.carousel__entry.active div.entry");
+};
 
 </script>
 
 <script>
 
-var edit = $("button.edit");
-
+// var edit = $("button.edit");
+updateVariables();
 // changes form action dynamically depending on item entry number.
 function formAction()
   {
     var id = $("div.carousel__entry.active div.update-id").html();
     document.updateForm.action = `/entries/${id}`;
+    console.log("phone");
 }
-edit.click(formAction);
 
 </script>
 
 <!-- this script injects content into update form -->
 <script>
 
-    $("button.save").click(function() {
-    var update_button= document.getElementById("update_button");
+    function updateEntry() {
+      var update_button= document.getElementById("update_button");
       console.log("success");
       var input = document.getElementById("update_body");
       var content = $("div.carousel__entry.active div.entry p.tab"); // gets all items with class name tag and creates array
@@ -444,7 +453,106 @@ edit.click(formAction);
       };
       input.value = (finalContent);
      update_button.click();
-  });
+  };
 
+</script>
+
+<!-- DROPDOWN CODE -->
+
+<script>
+
+//Clicked will be changed to true on edit so that cancel and save can be toggled on properly
+var clicked = false;
+
+// This will show the dropdown menu
+function toggle() {
+
+  // updates variables so that they understand which entry they are in
+  updateVariables();
+
+  // will trun on the drop down display and make dots darker
+  if (dropdown.style.display !== "block") {
+    dropdown.style.display = "block";
+    console.log("on");
+    dots.style.opacity = "80%";
+
+    // if clicked variable isn't true, this part of the code will turn off cancel and save displays
+    if (!clicked) {
+      cancel.style.display = "none";
+      save.style.display = "none";
+    };
+
+  } else {
+
+    // hides drop down when drop down is already showing
+    toggleOff();
+
+  };
+};
+
+
+  /* when edit is clicked this will change different buttons depending on what should be shown, also calls
+   form action which will update post request url of update action so that it updates current entry id */
+function editEntry() {
+
+  cancel.style.display = "block"
+  save.style.display = "block"
+  parent.style.display = "block"
+  destroy.style.display = "none";
+  edit.style.display = "none";
+  prev.style.display = "none";
+  next.style.display = "none";
+  update.focus();
+  clicked = true;
+
+
+    formAction();
+    toggleOff();
+
+
+};
+
+// does the opposite of the previous event
+function cancelEntry(){
+
+  cancel.style.display = "none"
+  save.style.display = "none"
+  parent.style.display = "none"
+  destroy.style.display = "block";
+  edit.style.display = "block";
+  prev.style.display = "block";
+  next.style.display = "block";
+
+    toggleOff();
+
+
+};
+
+//will toggleOff the dropdown menu
+function toggleOff(){
+
+
+   dropdown.style.display = "none";
+   dots.style.opacity = "20%";
+
+};
+
+
+
+  // toggles edit off
+
+</script>
+
+
+<script >
+  //makes it so tab key doesnt break app (disables it)
+document.addEventListener('keydown', logKey);
+
+ function logKey(e) {
+   if (e.code === "Tab"){
+     e.preventDefault();
+
+   };
+ };
 </script>
 
