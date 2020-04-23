@@ -1,15 +1,4 @@
 
-.mainmenubtn {
-    /*background-color: skyblue;*/
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding:20px;
-    margin-top:20px;
-}
-/*.mainmenubtn:hover {
-    background-color: blue;
-    }*/
 .dropdown {
     position: relative;
     display: inline-block;
@@ -17,23 +6,25 @@
 .dropdown-child {
     display: none;
     background-color: white;
-    min-width: 200px;
+    min-width: 150px;
     position: absolute;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 2;
 
 }
-.dropdown-child a {
+.dropdown-item {
     color: black;
     padding: 10px;
     text-decoration: none;
     display: block;
 }
-.dropdown:hover .dropdown-child {
-    display: none;
+
+.dropdown-item:hover{
+  background-color: rgb(240,240,240);
+  color: inherit;
+  text-decoration: none;
 
 }
-
 
 .fa-ellipsis-v{
   opacity: 20%;
@@ -57,3 +48,16 @@
 
 
 }
+
+#save {
+  // color: white;
+  // background-color: #DAA520;
+  // border-radius: 3px;
+  // border: none;
+  // width: 80px;
+  // height: 30px;
+  // float: right;
+  // position: relative;
+  // display: inline-block;
+}
+

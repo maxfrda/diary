@@ -10,7 +10,7 @@
     <% end %>
 
 <!-- sets counter for pages -->
-    <% page = 1 %>
+    <% page = 0 %>
 
 <!-- This is the document that the user types in to create entry -->
 <div class="carousel-wrapper">
@@ -22,12 +22,10 @@
         <div class="row">
           <div class="col-sm-12 col-lg-6 col-lg-offset-3">
             <div class="entries">
-              <%= render :partial => 'shared/dropdown' %>
-
-              <button id="save">
-                Save
-              </button>
-              <div class="subtitle">
+              <% if user_signed_in? %>
+                <%= render :partial => 'shared/dropdown' %>
+              <% end %>
+              <div class="subtitle" onclick="toggleOff()">
                 <p>
                   <% if user_signed_in?%>
                     <%= @user.name.capitalize %>'s Diary
@@ -49,12 +47,16 @@
               </div>
               <!-- This is where you enter text  -->
               <div contenteditable="true" class="entry">
-                <p class="tab">&nbsp;</p>
+                <p class="tab" onclick="toggleOff()">&nbsp;</p>
               </div>
               <div class="margin"></div>
               <div class="count">
-                <p>- <%= page %> -</p>
-                <% page += 1 %>
+              <% if !user_signed_in? || !@user.entries.exists? %>
+                <p>- <%= page + 1 %> -</p>
+                <% else %>
+                <p>- <%= sorted_entries.count + 1 %> -</p>
+              <% end %>
+              <% page += 1 %>
               </div>
             </div>
           </div>
@@ -79,14 +81,7 @@
                     <!-- resets this variable so that dropdown works -->
                   <% @home = "index" %>
                   <%= render :partial => 'shared/dropdown', locals: {entry: entry} %>
-
-                    <button class="save">
-                      Save
-                    </button>
-                    <button class="cancel">
-                      Cancel
-                    </button>
-                    <div class="subtitle">
+                    <div class="subtitle" onclick="toggleOff()">
                       <p>
                         <%= @user.name.capitalize %>'s Diary
                       </p>
@@ -118,13 +113,17 @@
                         <div class="divider div-transparent"></div>
                       </div>
                       <div contenteditable="true" class="entry update-padding">
-                        <p class="tab">&nbsp;</p>
+                        <p class="tab" onclick="toggleOff()">&nbsp;</p>
                       </div>
                     </div>
                     <div class="margin2"></div>
 
                     <div class="count">
-                      <p>- <%= page %> -</p>
+                      <% if page == 0 %>
+                        <p>- <%= 1 %> -</p>
+                      <% else %>
+                        <p>- <%= page %> -</p>
+                      <% end %>
                     </div>
                     <% page += 1 %>
                     <div class="update-id"><%= entry.id %></div>
@@ -139,7 +138,7 @@
   </div>
     <% if user_signed_in? %>
       <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-      <% if @user.entries.count > 0 %>
+      <% if page > 1 %>
         <div class="carousel__button--next"></div>
         <div class="carousel__button--prev"></div>
       <% end %>
@@ -158,6 +157,7 @@
 <%= f.text_field :body, id: "entry_body" %>
 <%= f.button :submit, id: "button" %>
 <% end %>
+
 
 
 
@@ -256,6 +256,7 @@ yourFunction()
   function setEventListeners() {
     var next = d.getElementsByClassName('carousel__button--next')[0],
         prev = d.getElementsByClassName('carousel__button--prev')[0];
+
 
     next.addEventListener('click', moveNext);
     prev.addEventListener('click', movePrev);
@@ -369,7 +370,7 @@ yourFunction()
   }
 
   // carousel is only initiated if the user has entries and is signed in
-  <% if user_signed_in? && @user.entries.exists?  %>
+
   // make it rain
   initCarousel();
 
@@ -385,59 +386,47 @@ yourFunction()
   //   };
   // }
 
+
   }(document));
-
-  <% end %>
   </script>
-
 
 <script>
 
-  var edit = $("a.edit");
-  var save = $("button.save");
-  var cancel = $("button.cancel");
-  // toggles edit off
-  edit.click(function(){
-    toggleOff();
-    edit.hide();
-    save.show();
-    cancel.show();
-    var parent =  $("div.carousel__entry.active div.toggle");
-    parent.toggle();
-    $("div.carousel__entry.active div.entry").focus();
-    console.log("focusing");
-    //toggles edit back on
-    cancel.click(function(){
-      console.log("test")
-      edit.show();
-      save.hide();
-      parent.toggle();
-      cancel.hide();
-    });
-  });
+//makes the variables globally available and makes sure they are updated whenever dropdown is pressed
 
+function updateVariables() {
+
+  window.dropdown = $("div.carousel__entry.active div.dropdown-child")[0];
+  window.dots = $("div.carousel__entry.active span.fa-ellipsis-v")[0];
+  window.edit = $("div.carousel__entry.active div.dropdown-child a.edit")[0];
+  window.save = $("div.carousel__entry.active div.dropdown-child a.save")[0];
+  window.cancel = $("div.carousel__entry.active div.dropdown-child a.cancel")[0];
+  window.destroy = $("div.carousel__entry.active div.dropdown-child a.delete")[0];
+  window.parent =  $("div.carousel__entry.active div.toggle")[0];
+  window.update = $("div.carousel__entry.active div.entry");
+};
 
 </script>
 
 <script>
 
-var edit = $("button.edit");
-
+// var edit = $("button.edit");
+updateVariables();
 // changes form action dynamically depending on item entry number.
 function formAction()
   {
     var id = $("div.carousel__entry.active div.update-id").html();
     document.updateForm.action = `/entries/${id}`;
+    console.log("phone");
 }
-edit.click(formAction);
 
 </script>
 
 <!-- this script injects content into update form -->
 <script>
 
-    $("button.save").click(function() {
-    var update_button= document.getElementById("update_button");
+    function updateEntry() {
+      var update_button= document.getElementById("update_button");
       console.log("success");
       var input = document.getElementById("update_body");
       var content = $("div.carousel__entry.active div.entry p.tab"); // gets all items with class name tag and creates array
@@ -449,7 +438,7 @@ edit.click(formAction);
       };
       input.value = (finalContent);
      update_button.click();
-  });
+  };
 
 </script>
 
@@ -457,41 +446,81 @@ edit.click(formAction);
 
 <script>
 
-//makes the variables globally available
+//Clicked will be changed to true on edit so that cancel and save can be toggled on properly
+var clicked = false;
 
-function updateVariables() {
+// This will show the dropdown menu
+function toggle() {
 
-  window.dropdown = $("div.carousel__entry.active div.dropdown-child")[0];
-  window.dots = $("div.carousel__entry.active span.fa-ellipsis-v")[0];
+  // updates variables so that they understand which entry they are in
+  updateVariables();
+
+  // will trun on the drop down display and make dots darker
+  if (dropdown.style.display !== "block") {
+    dropdown.style.display = "block";
+    console.log("on");
+    dots.style.opacity = "80%";
+
+    // if clicked variable isn't true, this part of the code will turn off cancel and save displays
+    if (!clicked) {
+      cancel.style.display = "none";
+      save.style.display = "none";
+    };
+
+  } else {
+
+    // hides drop down when drop down is already showing
+    toggleOff();
+
+  };
 };
 
-//will update variables and toggleOff the dropdown menu
+
+  /* when edit is clicked this will change different buttons depending on what should be shown, also calls
+   form action which will update post request url of update action so that it updates current entry id */
+function editEntry() {
+
+  cancel.style.display = "block"
+  save.style.display = "block"
+  parent.style.display = "block"
+  destroy.style.display = "none";
+  edit.style.display = "none";
+  update.focus();
+  clicked = true;
+
+
+    formAction();
+    toggleOff();
+
+
+};
+
+// does the opposite of the previous event
+function cancelEntry(){
+
+  cancel.style.display = "none"
+  save.style.display = "none"
+  parent.style.display = "none"
+  destroy.style.display = "block";
+  edit.style.display = "block";
+
+    toggleOff();
+
+
+};
+
+//will toggleOff the dropdown menu
 function toggleOff(){
 
-  updateVariables();
 
    dropdown.style.display = "none";
    dots.style.opacity = "20%";
 
 };
 
-//  will update variables and shows the drop down menu and changes background color of bubble
-function toggle() {
-
-  updateVariables();
 
 
-  if (dropdown.style.display !== "block") {
-    dropdown.style.display = "block";
-    dots.style.opacity = "80%";
-
-  } else {
-
-    toggleOff();
-
-  };
-};
-
+  // toggles edit off
 
 </script>
 

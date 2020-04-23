@@ -4,14 +4,14 @@
      <span class="fas fa-ellipsis-v"> </span>
       </div>
       <div class="dropdown-child">
-        <a class="edit">Edit</a>
         <!-- delete will only show on existing entries -->
         <% if @home == "index" %>
-          <a><%= link_to "Delete", entry_path(entry.id), method: :delete, remote:true, data: {confirm: "Are you sure?"} %></a>
+          <a><%= link_to "Delete", entry_path(entry.id), method: :delete, remote:true, data: {confirm: "Are you sure?"}, class: "dropdown-item delete" %></a>
+          <a class="dropdown-item edit" onclick="editEntry()">Edit</a>
+          <a class="dropdown-item save" onclick="updateEntry()">Save</a>
+          <a class="dropdown-item cancel" onclick="cancelEntry()">Cancel</a>
+        <% else %>
+          <a class="dropdown-item" id="save">Save</a>
         <% end %>
-
-        <a href="http://wwww.yourdomain.com/page3.html">Sub Menu 3</a>
-        <a href="http://wwww.yourdomain.com/page4.html">Sub Menu 4</a>
-        <a href="http://wwww.yourdomain.com/page5.html">Sub Menu 5</a>
       </div>
   </div>
