@@ -1,67 +1,10 @@
-console.log('blank page')
 
-var test = document.querySelector('.subtitle');
-console.log(test.innerHTML);
-
-//<!--  clicks the tag so that cursor shows up -->
 var p = document.getElementsByClassName("entry")[0];
 function clickTag(paragraph) {
   paragraph.focus(); // Click on the checkbox
 
 }
 clickTag(p);
-
-//<!-- injects contents of p tag into form and submits -->
-
-
-  document.getElementById("save").onclick = myFunction;
-  function myFunction() {
-    var input = document.getElementById("entry_body");
-    var content = $("div.carousel__entry.active p.tab");
-    var finalContent = '';
-    for (i = 0; i < content.length; i++) {
-      var p = $("div.carousel__entry.active p.tab")[i].innerHTML;
-      finalContent += `${p} <br>`;
-    };
-    input.value = (finalContent);
-    document.getElementById("button").click();
-}
-
-//<!-- This scrolls the page down automatically -->
-
-
-var textHeight = 902
-
-function yourFunction(){
-
-    var docHeight = document.getElementsByClassName("entries")[0].clientHeight;
-    var difference = textHeight - docHeight;
-    // if (difference > 29) {
-    //   textHeight = docHeight + 2
-    // };
-
-    if (docHeight >= textHeight) {
-    window.scrollBy(0, 22);
-    textHeight = docHeight + 22;
-
-
-
-    // alert(numberOfLineBreaks);
-  };
-
-    setTimeout(yourFunction, 100);
-}
-
-yourFunction()
-
-
-
-
-
-//<!-- CAROUSEL FUNCTIONALITY -->
-
-
-
 
   !(function(d){
   // Variables to target our base class,  get carousel items, count how many carousel items there are, set the slide to 0 (which is the number that tells us the frame we're on), and set motion to true which disables interactivity.
@@ -260,7 +203,6 @@ function formAction()
 }
 
 
-//<!-- this script injects content into update form -->
 
     function updateEntry() {
       var update_button= document.getElementById("update_button");
@@ -278,7 +220,6 @@ function formAction()
   };
 
 
-//<!-- DROPDOWN CODE -->
 
 
 //Clicked will be changed to true on edit so that cancel and save can be toggled on properly
@@ -320,18 +261,15 @@ function editEntry() {
   parent.style.display = "block"
   destroy.style.display = "none";
   edit.style.display = "none";
-
+  prev.style.display = "none";
+  next.style.display = "none";
   update.focus();
-  console.log('focused');
   clicked = true;
 
 
     formAction();
     toggleOff();
 
-    // put down here so it won't stop code if element doesn't exist on page
-  prev.style.display = "none";
-  next.style.display = "none";
 
 };
 
@@ -375,3 +313,41 @@ document.addEventListener('keydown', logKey);
 
    };
  };
+
+
+  document.getElementById("save").onclick = myFunction;
+  function myFunction() {
+    var input = document.getElementById("entry_body");
+    var content = $("div.carousel__entry.active p.tab");
+    var finalContent = '';
+    for (i = 0; i < content.length; i++) {
+      var p = $("div.carousel__entry.active p.tab")[i].innerHTML;
+      finalContent += `${p} <br>`;
+    };
+    input.value = (finalContent);
+    document.getElementById("button").click();
+}
+
+var textHeight = 902
+
+function yourFunction(){
+
+    var docHeight = document.getElementsByClassName("entries")[0].clientHeight;
+    var difference = textHeight - docHeight;
+    // if (difference > 29) {
+    //   textHeight = docHeight + 2
+    // };
+
+    if (docHeight >= textHeight) {
+    window.scrollBy(0, 22);
+    textHeight = docHeight + 22;
+
+
+
+    // alert(numberOfLineBreaks);
+  };
+
+    setTimeout(yourFunction, 100);
+}
+
+yourFunction()
