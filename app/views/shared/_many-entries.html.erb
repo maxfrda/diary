@@ -1,0 +1,26 @@
+<% @user.entries.each do |entry| %>
+  <% if entry.date == date %>
+    <% @made = false  %>
+    <% break %>
+  <% end %>
+  <% end %>
+
+<div class="carousel-wrapper">
+  <div class="carousel">
+    <% if (!@made) %>
+    <!-- code only runs if todays entry hasnt been made -->
+      <div class="carousel__entry initial">
+        <%= render :partial => 'shared/zero-entries' %>
+      </div>
+    <% end %>
+
+    <% @user.entries.each do |entry| %>
+      <div class="carousel__entry">
+        <%= render :partial => 'shared/one-entry', locals: {entry: entry} %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="carousel__button--next"></div>
+<div class="carousel__button--prev"></div>

@@ -91,7 +91,7 @@ var UIController = (function() {
     // focus functions
     autoClick : function(element) {
       console.log(element);
-      document.querySelector(element).focus()
+      document.querySelector(element).focus();
     },
     // logged out functions
 
@@ -189,8 +189,7 @@ var controller = (function(data,UIctrl) {
     init: function(){
       state = data.getState();
       domStrings = data.getDomStrings();
-      console.log(state);
-      switch (state) {
+-      switch (state) {
 
         case ('carousel'):
           carouselTasks();

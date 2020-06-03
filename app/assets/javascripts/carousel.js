@@ -7,7 +7,6 @@
       totalItems = items.length,
       slide = 0,
       moving = true;
-      carouselStrings = data.domStrings;
       console.log(totalItems)
 
   // To initialise the carousel we'll want to update the DOM with our own classes
@@ -33,11 +32,9 @@
 
     next.addEventListener('click', () => {
       moveNext();
-      tasks(carouselStrings);
   });
     prev.addEventListener('click', () => {
       movePrev();
-      tasks(carouselStrings);
   });
   }
 
