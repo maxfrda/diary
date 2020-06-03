@@ -1,0 +1,50 @@
+  <% @user.entries.each do |entry| %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-lg-6 col-lg-offset-3">
+          <div class="entries">
+            <%= render :partial => 'shared/dropdown', locals: {entry: entry} %>
+          <div class="subtitle">
+              <p>
+                <%= @user.name.capitalize %>'s Diary
+              </p>
+              <div class="wrapper">
+                <div class="divider div-transparent div-dot"></div>
+              </div>
+            </div>
+            <div class="date">
+              <h1>
+                <% date = Time.now.to_s %>
+                <%= Date.parse(date).strftime("%m/%d/%Y")%>
+              </h1>
+            </div>
+            <!-- This is where you enter text  -->
+            <div class="entry">
+              <%= entry.body.html_safe %>
+            </div>
+            <% if entry.updates.exists? %>
+              <% entry.updates.each do |update| %>
+                <% update_date = update.date %>
+                <% update_date = Date.parse(update_date).strftime("%m/%d/%Y") %>
+                <p class="update-date ">Updated on <%= update_date %></p>
+                <p class="entry spacing"> <%= update.body.html_safe %></p>
+              <% end %>
+            <% end %>
+            <div class="toggle">
+              <div class="wrapper">
+                <div class="divider div-transparent"></div>
+              </div>
+              <div contenteditable="true" class="entry update-padding">
+                <p class="tab">&nbsp;</p>
+               </div>
+            </div>
+            <div class="margin2"></div>
+            <div class="count">
+              <p>- 1 -</p>
+            </div>
+            <div class="update-id"><%= entry.id %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
