@@ -11,9 +11,9 @@ var diaryData = (function(){
   var carousel = document.querySelector('.carousel');
   var singlePage = document.querySelector('.dropdown-child');
   var newEntry = document.querySelector('update-id');
-  var entryState, singlePageStrings, carouselStrings, domStrings;
+  var entryState, domStrings, parent;
 
-  singlePageStrings = {
+  domStrings = {
     ellipses: '.ellipses',
     dots: '.fa-ellipsis-v',
     dropdown: '.dropdown-child',
@@ -31,28 +31,14 @@ var diaryData = (function(){
 
   };
 
-  carouselStrings = {
-    ellipses: 'div.carousel__entry.active.ellipses',
-    dots: 'div.carousel__entry.active.fa-ellipsis-v',
-    dropdown: 'div.carousel__entry.active.dropdown-child',
-    edit: 'div.carousel__entry.active.edit',
-    save: 'div.carousel__entry.active.save',
-    cancel: 'div.carousel__entry.active.cancel',
-    destroy: 'div.carousel__entry.active.delete',
-    parent: 'div.carousel__entry.active.toggle',
-    paragraphFocus: 'div.carousel__entry.active.entry',
-    docHeight : 'div.carousel__entry.active.entries',
-    updateId: 'div.carousel__entry.active.update-id',
-    updateContent: 'div.carousel__entry.active.toggle.tab',
-    newContent: 'div.carousel__entry.active.entry.tab',
-    newSave: '#save'
-  };
+  //  test code below
+  // domstrings should return an object that has each item as a se
 
-  domStrings = singlePageStrings;
-
+  //test end
+  parent = document;
   if (carousel) {
-    domStrings = carouselStrings;
-    entryState = 'carousel'
+    parent = 'div.carousel__entry.active';
+    entryState = 'carousel';
   } else if (singlePage) {
     entryState = 'single';
   } else {
@@ -60,11 +46,21 @@ var diaryData = (function(){
   };
 
   return {
+
+    // a query selector is added to each domString depending on the parent element
+    addSelectors: function(element, strings){
+      Object.keys(strings).forEach(function(key){
+      strings[key] = element.querySelector(strings[key]) });
+      return strings;
+    },
     getDomStrings: function(){
       return domStrings;
     },
     getState: function(){
       return entryState;
+    },
+    getParent: function(){
+      return document.querySelector(parent);
     }
   };
 })();
@@ -89,9 +85,9 @@ var UIController = (function() {
     },
 
     // focus functions
-    autoClick : function(element) {
-      console.log(element);
-      document.querySelector(element).focus();
+    autoClick : function(paragraph) {
+      // console.log(paragraph);
+      paragraph.focus()
     },
     // logged out functions
 
@@ -175,7 +171,6 @@ var controller = (function(data,UIctrl) {
   }
 
   var carouselTasks = function() {
-    carousel(document);
     loggedIn();
   }
 
@@ -188,16 +183,23 @@ var controller = (function(data,UIctrl) {
 
     init: function(){
       state = data.getState();
-      domStrings = data.getDomStrings();
--      switch (state) {
 
-        case ('carousel'):
-          carouselTasks();
-        case ('single') :
-          loggedIn();
-        case (null):
-          loggedOut();
+      switch (state) {
+        case 'carousel':
+          carousel(document);
+          break;
       }
+      domStrings = data.addSelectors(data.getParent(), data.getDomStrings());
+
+      switch(state){
+        case null:
+          loggedOut();
+          break;
+        default:
+          loggedIn();
+          break;
+      }
+
     }
   };
 
