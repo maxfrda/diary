@@ -5,7 +5,6 @@ class EntriesController < ApplicationController
     @entries = Entry.all
     @user = current_user
     @update = Update.new
-
   end
 
   def index
@@ -16,7 +15,10 @@ class EntriesController < ApplicationController
   def destroy
     @entry = Entry.find(params[:id])
     @entry.destroy
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js { head :no_content }
+    end
   end
 
   def show
@@ -33,6 +35,8 @@ class EntriesController < ApplicationController
 
     if @update.save
       redirect_to root_path
+    else
+      redirect_to entries_path(@entry, anchor: "#{@entry.id}")
     end
   end
 

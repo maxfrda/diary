@@ -1,0 +1,39 @@
+  <!-- code only runs if todays entry hasnt been made -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6 col-lg-offset-3">
+            <div class="entries">
+              <%= render :partial => 'shared/new-dropdown' %>
+            <div class="subtitle">
+                <p>
+                  <%= @user.name.capitalize %>'s Diary
+                </p>
+                <div class="wrapper">
+                  <div class="divider div-transparent div-dot"></div>
+                </div>
+              </div>
+              <div class="date">
+                <h1>
+                  <% date = Time.now.to_s %>
+                  <%= Date.parse(date).strftime("%m/%d/%Y")%>
+                </h1>
+              </div>
+              <!-- This is where you enter text  -->
+              <div contenteditable="true" class="entry">
+                <p class="tab">&nbsp;</p>
+              </div>
+              <div class="margin"></div>
+              <div class="count">
+                <p>- 1 -</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<!-- Javascript injects content into this form and saves it as an entry instance -->
+<%= form_for @entry do |f| %>
+<%= f.text_field :body, id: "entry_body" %>
+<%= f.button :submit, id: "button" %>
+<% end %>

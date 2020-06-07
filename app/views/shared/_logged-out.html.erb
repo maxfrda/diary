@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-lg-6 col-lg-offset-3">
+      <div class="entries">
+        <div class="subtitle" onclick="">
+          <p>
+            <%= link_to "Log-in", user_session_path %>
+            to save entries
+          </p>
+          <div class="wrapper">
+            <div class="divider div-transparent div-dot"></div>
+          </div>
+        </div>
+        <div class="date">
+          <h1>
+            <% date = Time.now.to_s %>
+           <%= Date.parse(date).strftime("%m/%d/%Y")%>
+          </h1>
+        </div>
+        <!-- This is where you enter text  -->
+        <div contenteditable="true" class="entry">
+          <p class="tab" onclick="">&nbsp;</p>
+        </div>
+        <div class="margin"></div>
+        <div class="count">
+          <p>- 1 -</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
