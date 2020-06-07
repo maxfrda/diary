@@ -6,7 +6,7 @@
       <div class="dropdown-child">
         <!-- delete will only show on existing entries -->
             <% if entry %>
-              <a><%= link_to "Delete", entry_path(entry.id), method: :delete, remote:true, data: {confirm: "Are you sure?"}, class: "dropdown-item delete", style: "display:none" %></a>
+              <a><%= link_to "Delete", entry_path(entry.id), method: :delete, data: {confirm: "Are you sure?"}, class: "dropdown-item delete", style: "display:none" %></a>
             <% end %>
             <a class="dropdown-item edit" style="display:none">Update</a>
             <a class="dropdown-item save" style="display:none">Save</a>

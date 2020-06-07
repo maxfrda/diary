@@ -1,3 +1,4 @@
+      window.counter = 0;
 
 // all
 // logged out (1 page)
@@ -10,10 +11,9 @@ var diaryData = (function(){
 
   var carousel = document.querySelector('.carousel');
   var singlePage = document.querySelector('.dropdown-child');
-  var newEntry = document.querySelector('update-id');
-  var entryState, domStrings, parent;
+  var entryState, DOMstrings, parent;
 
-  domStrings = {
+  DOMstrings = {
     ellipses: '.ellipses',
     dots: '.fa-ellipsis-v',
     dropdown: '.dropdown-child',
@@ -24,17 +24,19 @@ var diaryData = (function(){
     parent: '.toggle',
     paragraphFocus: '.entry',
     docHeight: '.entries',
-    updateId: '.update-id',
+    updateID: '.update-id',
     updateContent: 'toggle.tab',
-    newContent: 'entry.tab',
-    newSave: '#save'
+    updateBody: '#update_body',
+    updateFocus: '.update-entry',
+    updateButton: '#update_button',
+    newContent: 'p.tab',
+    newSave: '#save',
+    entryBody: '#entry_body',
+    entryButton: '#button'
 
   };
 
-  //  test code below
-  // domstrings should return an object that has each item as a se
-
-  //test end
+  // parent determines which ELEMENT queryselector searches
   parent = document;
   if (carousel) {
     parent = 'div.carousel__entry.active';
@@ -46,22 +48,34 @@ var diaryData = (function(){
   };
 
   return {
-
     // a query selector is added to each domString depending on the parent element
-    addSelectors: function(element, strings){
-      Object.keys(strings).forEach(function(key){
-      strings[key] = element.querySelector(strings[key]) });
-      return strings;
-    },
+
     getDomStrings: function(){
-      return domStrings;
+      cloneObject = Object.assign({}, DOMstrings);
+      return cloneObject;
     },
     getState: function(){
       return entryState;
     },
     getParent: function(){
-      return document.querySelector(parent);
+      //here we set the value of parent, which determines whether we are searching
+      // the document or the parent element.
+        if (carousel) {
+          return document.querySelector('div.carousel__entry.active');
+        } else {
+          return document;
+        }
+    },
+
+    updateParent: function() {
+      // removes event listeners by replacing parent element
+      var parent = diaryData.getParent();
+      var new_parent = parent.cloneNode(true);
+      return parent.parentNode.replaceChild(new_parent, parent);
     }
+
+
+
   };
 })();
 
@@ -72,15 +86,15 @@ var UIController = (function() {
   return {
     // drop down functions
     dropdownToggle: function(dots, dropdown){
-      var ellipses = document.querySelector(dots);
-      var opacity = ellipses.style.opacity;
+
+      var opacity = dots.style.opacity;
 
       if (opacity == 0.8) {
-        ellipses.style.opacity = '20%';
-        $(dropdown).toggle();
+        dots.style.opacity = '20%';
+        UIController.flip(dropdown);
       } else {
-        ellipses.style.opacity = '80%';
-        $(dropdown).toggle();
+        dots.style.opacity = '80%';
+        UIController.flip(dropdown);
       }
     },
 
@@ -93,8 +107,19 @@ var UIController = (function() {
 
     // toggle functions
     flip: function(...args){
+      counter += 1
+      console.log(counter);
         for (var i = 0; i < args.length; i++){
-          $(args[i]).toggle();
+          if (args[i].style.display == 'block') {
+              args[i].style.display = 'none';
+              console.log(`${args[i].className}: ${args[i].style.display}`)
+          } else {
+            args[i].style.display = 'block';
+              console.log(`${args[i].className}: ${args[i].style.display}`)
+
+
+
+          }
       }
     }
 
@@ -104,8 +129,8 @@ var UIController = (function() {
 
 
 var controller = (function(data,UIctrl) {
-  var data;
   var domStrings;
+  var parent
 
 
   var loggedOut = function(){
@@ -114,73 +139,117 @@ var controller = (function(data,UIctrl) {
 
   var loggedIn = function(){
     UIctrl.autoClick(domStrings.paragraphFocus);
-    dropdownListener();
+    determineEventListeners(domStrings.updateID);
+
   };
 
   var dropdownListener = function(){
-      document.querySelector(domStrings.ellipses).addEventListener('click', () => {
-      determineEventListeners(domStrings.updateId);
+      domStrings.ellipses.addEventListener('click', () => {
       UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
+      console.log(state);
     })
 
   };
 
+
   var setEventListeners = function(...args){
     args.forEach(function(cur){
-      element = document.querySelector(cur);
-      switch (cur) {
-        case(domStrings.edit):
-          element.addEventListener('click', () => {
-            items = [cur, domStrings.cancel, domStrings.save, domStrings.parent]
-            UIctrl.flip(cur, domStrings.cancel, domStrings.save, domStrings.parent); //turns single item into array
-            UIctrl.autoClick(domStrings.paragraphFocus);
-            setEventListeners(domStrings.cancel, domStrings.save)
+      if (cur == domStrings.edit) {
+          cur.addEventListener('click', () => {
+            UIctrl.flip(cur, domStrings.cancel, domStrings.save,
+              domStrings.destroy, domStrings.parent);
+            UIctrl.autoClick(domStrings.updateFocus);
+            UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
           });
-        case(domStrings.newSave):
-          element.addEventListener('click', UIctrl.saveEntry);
-        case(domStrings.cancel):
-          //code
-          element.addEventListener('click', () => {
-            items = [cur, domStrings.save];
-            UIctrl.flip(cur, domStrings.save);
+        } else if (cur == domStrings.newSave) {
+          cur.addEventListener('click', saveEntry);
+        } else if (cur == domStrings.cancel){
+          cur.addEventListener('click', () => {
+            UIctrl.flip(cur,  domStrings.save, domStrings.parent, domStrings.edit,
+              domStrings.destroy);
+            UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
           });
-        case(domStrings.save):
+        } else if (cur == domStrings.save) {
           //code
-          // element.addEventListener('click', )
-      }
-    });
-  }
+          cur.addEventListener('click', () =>{
+          updateEntry();
+        })
+
+        } else if (cur == domStrings.destroy){
+          console.log('destroy');
+        }
+      });
+    };
+
 
   var determineEventListeners = function(entryID){
     var items;
-    var currentEntry = document.querySelector(entryID);
 
-    // checks to see if this is a new entry (only exisiting entries have this element)
-    if (currentEntry) {
-      items = [domStrings.edit, domStrings.destroy]
+    // checks to see if this is an existing entry (only exisiting entries have this element)
+    if (entryID) {
+      items = [domStrings.edit, domStrings.destroy, domStrings.save,
+              domStrings.cancel, domStrings.parent]
+              console.log('newSave not being passed')
+      UIctrl.flip(domStrings.edit, domStrings.destroy)
     } else {
-      items = [domStrings.newSave]
+      console.log('new save being passed')
+      items = [domStrings.newSave, domStrings.dropdown]
+
     };
 
+    dropdownListener();
+
       items.forEach (function(cur) {
-        UIctrl.flip(cur);
         setEventListeners(cur);
     });
-    // document.querySelector(strings.cancel).addEventListener('click', cancelEntry);
-    // document.querySelector(strings.save).addEventListener('click', updateEntry(strings.updateContent));
   }
 
-  var carouselTasks = function() {
-    loggedIn();
-  }
+      var addSelectors = function(element, strings){
+      Object.keys(strings).forEach(function(key){
+        // console.log(`${key}: ${element}`)
+      strings[key] = element.querySelector(strings[key]) });
+      return strings;
+      // returns a new object with the element selected in each key value
+    }
+
+    var saveEntry = function() {
+      if (state == 'carousel') {
+        var content = $("div.carousel__entry.active p.tab");
+      } else {
+        var content = $("p.tab");
+      }
+      var input = domStrings.entryBody;
+      var finalContent = '';
+      for (i = 0; i < content.length; i++) {
+        var p = content[i].innerHTML;
+        finalContent += `${p} <br>`;
+      };
+      input.value = (finalContent);
+      domStrings.entryButton.click();
+
+    }
+
+    var updateEntry = function() {
+      if (state == 'carousel') {
+        var content = $("div.carousel__entry.active p.tab");
+        var p = $("div.carousel__entry.active div.toggle p.tab")
+      } else {
+        var content = $("p.tab");
+        var p = $("div.toggle p.tab")
+      }
+      var finalContent = '';
+      for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
+        var p = p[i].innerHTML;
+        finalContent += `${p} <br>`;
+      };
+     document.getElementById("update_body").value = (finalContent);
+     $('#update_button').click();
+  };
 
 
-    // initialize carousel
-    // set event listeners
-    // post and destroy requests
+
 
   return {
-
     init: function(){
       state = data.getState();
 
@@ -189,8 +258,9 @@ var controller = (function(data,UIctrl) {
           carousel(document);
           break;
       }
-      domStrings = data.addSelectors(data.getParent(), data.getDomStrings());
 
+      domStrings = addSelectors(data.getParent(), data.getDomStrings());
+      console.log(data.getDomStrings());
       switch(state){
         case null:
           loggedOut();
@@ -200,9 +270,21 @@ var controller = (function(data,UIctrl) {
           break;
       }
 
-    }
+    },
+
+    carouselTasks: function(){
+
+      console.log('working');
+      data.updateParent();
+      domStrings = addSelectors(data.getParent(), data.getDomStrings());
+      loggedIn();
+    },
+
+
   };
 
 })(diaryData,UIController);
 
 controller.init();
+
+

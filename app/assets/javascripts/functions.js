@@ -9,40 +9,40 @@ document.addEventListener('keydown', logKey);
    };
  };
 
-// changes form action dynamically depending on item entry number.
-function formAction(id)
-  {
-    var id = id.html();
-    document.updateForm.action = `/entries/${id}`;
-}
+// // changes form action dynamically depending on item entry number.
+// function formAction(id)
+//   {
+//     var id = id.html();
+//     document.updateForm.action = `/entries/${id}`;
+// }
 
 
-function updateEntry(text) {
- var update_button= document.getElementById("update_button");
- var input = document.getElementById("update_body");
- var content = $(text); // gets all items with class name 'tab' and creates array
- var finalContent = '';
- for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
-   var p = $(text)[i].innerHTML;
-   finalContent += `${p} <br>`;
- };
- input.value = (finalContent);
-update_button.click();
-};
+// function updateEntry(text) {
+//  var update_button= document.getElementById("update_button");
+//  var input = document.getElementById("update_body");
+//  var content = $(text); // gets all items with class name 'tab' and creates array
+//  var finalContent = '';
+//  for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
+//    var p = $(text)[i].innerHTML;
+//    finalContent += `${p} <br>`;
+//  };
+//  input.value = (finalContent);
+// update_button.click();
+// };
 
 
 
-function saveEntry(newContent) {
-    var input = document.getElementById("entry_body");
-    var content = $(newContent);
-    var finalContent = '';
-    for (i = 0; i < content.length; i++) {
-      var p = $(newContent)[i].innerHTML;
-      finalContent += `${p} <br>`;
-    };
-    input.value = (finalContent);
-    document.getElementById("button").click();
-}
+// function saveEntry(newContent) {
+//     var input = document.getElementById("entry_body");
+//     var content = $(newContent);
+//     var finalContent = '';
+//     for (i = 0; i < content.length; i++) {
+//       var p = $(newContent)[i].innerHTML;
+//       finalContent += `${p} <br>`;
+//     };
+//     input.value = (finalContent);
+//     document.getElementById("button").click();
+// }
 
 // function autoScroller(element){
 

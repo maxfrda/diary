@@ -7,7 +7,6 @@
       totalItems = items.length,
       slide = 0,
       moving = true;
-      console.log(totalItems)
 
   // To initialise the carousel we'll want to update the DOM with our own classes
   function setInitialClasses() {
@@ -29,12 +28,13 @@
      var next = d.getElementsByClassName('carousel__button--next')[0];
      var prev = d.getElementsByClassName('carousel__button--prev')[0];
 
-
     next.addEventListener('click', () => {
       moveNext();
+      controller.carouselTasks();
   });
     prev.addEventListener('click', () => {
       movePrev();
+      controller.carouselTasks();
   });
   }
 
@@ -48,7 +48,7 @@
       moving = false
       $("div.carousel__button--next").show();
       $("div.carousel__button--prev").show();
-    }, 500);
+    }, 100);
   }
 
   function moveCarouselTo(slide) {

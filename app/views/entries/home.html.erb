@@ -7,11 +7,11 @@
     <% elsif @user.entries.first.date == date  && @entries.count == 1%>
       <% @user.entries.each do |entry|  %>
         <%= render :partial => 'shared/one-entry' %>
+        <%= render :partial => 'shared/update-form' %>
       <% end %>
     <% else %>
       <%= render :partial => 'shared/many-entries', locals: {date: date}  %>
     <% end %>
-
 
 
 
