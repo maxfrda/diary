@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root to: 'entries#home'
 
   resources :entries, only: [:create, :index, :show, :destroy] do
-  post :update, on: :member
+    resources :updates, only: [:create]
  end
 end
