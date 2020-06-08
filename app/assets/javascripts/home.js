@@ -1,4 +1,3 @@
-      window.counter = 0;
 
 // all
 // logged out (1 page)
@@ -27,6 +26,7 @@ var diaryData = (function(){
     updateID: '.update-id',
     updateContent: 'toggle.tab',
     updateBody: '#update_body',
+    updateText: '.update-padding',
     updateFocus: '.update-entry',
     updateButton: '#update_button',
     newContent: 'p.tab',
@@ -88,16 +88,21 @@ var UIController = (function() {
     dropdownToggle: function(dots, dropdown){
 
       var opacity = dots.style.opacity;
-
       if (opacity == 0.8) {
         dots.style.opacity = '20%';
         UIController.flip(dropdown);
       } else {
         dots.style.opacity = '80%';
         UIController.flip(dropdown);
+
       }
     },
-
+    reset: function(...args){
+      args.forEach(function(cur){
+        cur.style.display = 'none';
+        console.log('fuchskia;dlkf')
+      });
+    },
     // focus functions
     autoClick : function(paragraph) {
       // console.log(paragraph);
@@ -107,8 +112,6 @@ var UIController = (function() {
 
     // toggle functions
     flip: function(...args){
-      counter += 1
-      console.log(counter);
         for (var i = 0; i < args.length; i++){
           if (args[i].style.display == 'block') {
               args[i].style.display = 'none';
@@ -116,8 +119,6 @@ var UIController = (function() {
           } else {
             args[i].style.display = 'block';
               console.log(`${args[i].className}: ${args[i].style.display}`)
-
-
 
           }
       }
@@ -138,8 +139,10 @@ var controller = (function(data,UIctrl) {
   };
 
   var loggedIn = function(){
+    console.log('logged in')
     UIctrl.autoClick(domStrings.paragraphFocus);
     determineEventListeners(domStrings.updateID);
+
 
   };
 
@@ -151,6 +154,13 @@ var controller = (function(data,UIctrl) {
 
   };
 
+  var cancelFunction = function(){
+    UIctrl.flip(domStrings.cancel,  domStrings.save, domStrings.parent, domStrings.edit,
+    domStrings.destroy);
+    UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
+
+  }
+
 
   var setEventListeners = function(...args){
     args.forEach(function(cur){
@@ -159,20 +169,19 @@ var controller = (function(data,UIctrl) {
             UIctrl.flip(cur, domStrings.cancel, domStrings.save,
               domStrings.destroy, domStrings.parent);
             UIctrl.autoClick(domStrings.updateFocus);
+
             UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
           });
         } else if (cur == domStrings.newSave) {
           cur.addEventListener('click', saveEntry);
         } else if (cur == domStrings.cancel){
-          cur.addEventListener('click', () => {
-            UIctrl.flip(cur,  domStrings.save, domStrings.parent, domStrings.edit,
-              domStrings.destroy);
-            UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
-          });
+          cur.addEventListener('click', cancelFunction);
         } else if (cur == domStrings.save) {
           //code
           cur.addEventListener('click', () =>{
+          formAction();
           updateEntry();
+
         })
 
         } else if (cur == domStrings.destroy){
@@ -229,21 +238,30 @@ var controller = (function(data,UIctrl) {
 
     }
 
+    var formAction = function() {
+      var id = domStrings.updateID.innerHTML;
+      document.updateForm.action = `/entries/${id}/updates`;
+    }
+
     var updateEntry = function() {
       if (state == 'carousel') {
         var content = $("div.carousel__entry.active p.tab");
-        var p = $("div.carousel__entry.active div.toggle p.tab")
       } else {
         var content = $("p.tab");
-        var p = $("div.toggle p.tab")
       }
       var finalContent = '';
       for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
-        var p = p[i].innerHTML;
+        var p = content[i].innerHTML;
         finalContent += `${p} <br>`;
+        console.log(finalContent);
       };
      document.getElementById("update_body").value = (finalContent);
      $('#update_button').click();
+     var p = domStrings.updateID.innerHTML;
+     $(`#update-${p}`).load(` #update-${p}`);
+     domStrings.newContent.innerHTML = "&nbsp;";
+
+      cancelFunction();
   };
 
 
@@ -252,7 +270,6 @@ var controller = (function(data,UIctrl) {
   return {
     init: function(){
       state = data.getState();
-
       switch (state) {
         case 'carousel':
           carousel(document);
@@ -277,6 +294,7 @@ var controller = (function(data,UIctrl) {
       console.log('working');
       data.updateParent();
       domStrings = addSelectors(data.getParent(), data.getDomStrings());
+      UIctrl.reset(domStrings.edit, domStrings.destroy);
       loggedIn();
     },
 

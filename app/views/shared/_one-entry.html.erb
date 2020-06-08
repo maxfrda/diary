@@ -21,29 +21,33 @@
             <div class="entry">
               <%= entry.body.html_safe %>
             </div>
-            <% if entry.updates.exists? %>
-              <% entry.updates.each do |update| %>
-                <% update_date = update.date %>
-                <% update_date = Date.parse(update_date).strftime("%m/%d/%Y") %>
-                <p class="update-date ">Updated on <%= update_date %></p>
-                <p class="entry spacing"> <%= update.body.html_safe %></p>
+            <div id="update-<%=entry.id%>">
+              <div class="updates">
+              <% if entry.updates.exists? %>
+                <% sorted_updates = entry.updates.sort_by(&:created_at) %>
+                <% sorted_updates.each do |update| %>
+                  <% update_date = update.date %>
+                  <% update_date = Date.parse(update_date).strftime("%m/%d/%Y") %>
+                  <p class="update-date ">Updated on <%= update_date %></p>
+                  <p class="entry spacing"> <%= update.body.html_safe %></p>
+                <% end %>
               <% end %>
-            <% end %>
+              </div>
+            </div>
             <div class="toggle">
               <div class="wrapper">
                 <div class="divider div-transparent"></div>
               </div>
               <div contenteditable="true" class="update-entry update-padding">
                 <p class="tab">&nbsp;</p>
-               </div>
+              </div>
             </div>
             <div class="margin2"></div>
             <div class="count">
-              <p>- 1 -</p>
+              <p>-<%= index + 1 %> -</p>
             </div>
             <div class="update-id"><%= entry.id %></div>
           </div>
         </div>
       </div>
     </div>
-

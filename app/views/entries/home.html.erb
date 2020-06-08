@@ -1,12 +1,11 @@
     <% date = Date.today.strftime %>
-
     <% if !user_signed_in? %>
       <%= render :partial => 'shared/logged-out' %>
     <% elsif user_signed_in? && !@user.entries.exists? %>
       <%= render :partial => 'shared/zero-entries' %>
-    <% elsif @user.entries.first.date == date  && @entries.count == 1%>
-      <% @user.entries.each do |entry|  %>
-        <%= render :partial => 'shared/one-entry' %>
+    <% elsif @user.entries.first.date == date  && @user.entries.count == 1%>
+      <% @user.entries.each_with_index do |entry, index|  %>
+        <%= render :partial => 'shared/one-entry', locals: {entry: entry, index: index}  %>
         <%= render :partial => 'shared/update-form' %>
       <% end %>
     <% else %>

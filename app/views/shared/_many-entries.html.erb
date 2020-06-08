@@ -1,22 +1,24 @@
+<% @make_new = true %>
 <% @user.entries.each do |entry| %>
-  <% if entry.date == date %>
-    <% @made = false  %>
+  <% if entry.date == date%>
+  <!-- looks through database, if today's entry has been made, made variable is set to false -->
+    <% @make_new = false  %>
     <% break %>
   <% end %>
   <% end %>
 
 <div class="carousel-wrapper">
   <div class="carousel">
-    <% if (!@made) %>
+    <% if (@make_new) %>
     <!-- code only runs if todays entry hasnt been made -->
       <div class="carousel__entry">
         <%= render :partial => 'shared/zero-entries' %>
       </div>
     <% end %>
 
-    <% @user.entries.each do |entry| %>
+    <% @user.entries.each_with_index do |entry, index| %>
       <div class="carousel__entry">
-        <%= render :partial => 'shared/one-entry', locals: {entry: entry} %>
+        <%= render :partial => 'shared/one-entry', locals: {entry: entry, index: index} %>
       </div>
     <% end %>
     <%= render :partial => 'shared/update-form' %>
