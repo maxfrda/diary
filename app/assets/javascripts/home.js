@@ -159,7 +159,10 @@ var controller = (function(data,UIctrl) {
     UIctrl.flip(domStrings.cancel,  domStrings.save, domStrings.parent, domStrings.edit,
     domStrings.destroy);
     UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
-
+    if (state == 'carousel'){
+      $("div.carousel__button--next").show();
+      $("div.carousel__button--prev").show();
+    }
   }
 
 
@@ -172,6 +175,10 @@ var controller = (function(data,UIctrl) {
             UIctrl.autoClick(domStrings.updateFocus);
 
             UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
+            if (state == 'carousel'){
+              $("div.carousel__button--next").hide();
+              $("div.carousel__button--prev").hide();
+            }
           });
         } else if (cur == domStrings.newSave) {
           cur.addEventListener('click', saveEntry);
