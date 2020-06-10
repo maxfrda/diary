@@ -99,6 +99,7 @@ var UIController = (function() {
     },
     reset: function(...args){
       args.forEach(function(cur){
+        console.log(cur);
         cur.style.display = 'none';
         console.log('fuchskia;dlkf')
       });
@@ -264,11 +265,21 @@ var controller = (function(data,UIctrl) {
       cancelFunction();
   };
 
+  var preventTab = function(){
 
+   document.addEventListener('keydown', logKey);
+   function logKey(e) {
+     if (e.code === "Tab"){
+       e.preventDefault();
+
+     };
+   };
+  }
 
 
   return {
     init: function(){
+      preventTab();
       state = data.getState();
       switch (state) {
         case 'carousel':
@@ -294,7 +305,10 @@ var controller = (function(data,UIctrl) {
       console.log('working');
       data.updateParent();
       domStrings = addSelectors(data.getParent(), data.getDomStrings());
-      UIctrl.reset(domStrings.edit, domStrings.destroy);
+      console.log(domStrings.edit, domStrings.destroy);
+      if (domStrings.edit){
+        UIctrl.reset(domStrings.edit, domStrings.destroy);
+    }
       loggedIn();
     },
 

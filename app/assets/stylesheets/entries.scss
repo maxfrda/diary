@@ -328,8 +328,7 @@ i {
 
 .carousel__button--prev,
 .carousel__button--next {
-  position: absolute;
-  top: 8%;
+  position: relative;
   width: 3rem;
   height: 3rem;
   background-color: #FFF;
@@ -347,14 +346,15 @@ i {
   background-color: goldenrod;
 
 }
-
 .carousel__button--prev {
-  left: 65%;
+  right: 35%;
 
 }
 
+/* line 354, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .carousel__button--next {
-  right: 31%;
+  left: 20%;
+  top: 38%;
 }
 
 .carousel__button--prev::after,
@@ -365,7 +365,7 @@ i {
   height: 10px;
   top: 50%;
   left: 54%;
-  border-right: 2px solid #DAA520;
+  border-right: 2px  solid #DAA520;
   border-bottom: 2px solid #DAA520;
   -webkit-transform: translate(-50%, -50%) rotate(135deg);
   transform: translate(-50%, -50%) rotate(135deg);
@@ -427,4 +427,53 @@ i {
 
 .hideforms{
   display: none;
+}
+
+.button-wrapper{
+  position: absolute;
+  height: 80px;
+  width: 70px;
+  right: calc(50% - 370px);
+  top: 4%;
+  text-align:center;
+}
+
+.form{
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  z-index: 1;
+}
+
+.form-container {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
+  padding: 20px;
+  width: 100%;
+  /* or height: 9.5in; */
+  background-color: white;
+}
+
+.btn-primary{
+  background-color: #DAA520 !important;
+  border: none;
+
+}
+
+.btn-primary:hover{
+  background-color: #DFAA27 !important;
+
+}
+
+.form-group{
+  font-size: 18px;
+
+}
+
+.form-header{
+  text-align: center;
+  font-family: 'Tangerine', cursive;
+  font-size: 55px;
+  margin-bottom: 40px;
+
 }

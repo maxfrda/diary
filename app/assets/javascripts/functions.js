@@ -1,14 +1,4 @@
 
-
-document.addEventListener('keydown', logKey);
-
- function logKey(e) {
-   if (e.code === "Tab"){
-     e.preventDefault();
-
-   };
- };
-
 // // changes form action dynamically depending on item entry number.
 // function formAction(id)
 //   {
