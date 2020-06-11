@@ -166,6 +166,7 @@ var controller = (function(data,UIctrl) {
   }
 
 
+
   var setEventListeners = function(...args){
     args.forEach(function(cur){
       if (cur == domStrings.edit) {
