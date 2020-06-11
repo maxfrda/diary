@@ -99,6 +99,7 @@ var UIController = (function() {
     },
     reset: function(...args){
       args.forEach(function(cur){
+        console.log(cur);
         cur.style.display = 'none';
         console.log('fuchskia;dlkf')
       });
@@ -158,8 +159,12 @@ var controller = (function(data,UIctrl) {
     UIctrl.flip(domStrings.cancel,  domStrings.save, domStrings.parent, domStrings.edit,
     domStrings.destroy);
     UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
-
+    if (state == 'carousel'){
+      $("div.carousel__button--next").show();
+      $("div.carousel__button--prev").show();
+    }
   }
+
 
 
   var setEventListeners = function(...args){
@@ -171,6 +176,10 @@ var controller = (function(data,UIctrl) {
             UIctrl.autoClick(domStrings.updateFocus);
 
             UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
+            if (state == 'carousel'){
+              $("div.carousel__button--next").hide();
+              $("div.carousel__button--prev").hide();
+            }
           });
         } else if (cur == domStrings.newSave) {
           cur.addEventListener('click', saveEntry);
@@ -264,11 +273,21 @@ var controller = (function(data,UIctrl) {
       cancelFunction();
   };
 
+  var preventTab = function(){
 
+   document.addEventListener('keydown', logKey);
+   function logKey(e) {
+     if (e.code === "Tab"){
+       e.preventDefault();
+
+     };
+   };
+  }
 
 
   return {
     init: function(){
+      preventTab();
       state = data.getState();
       switch (state) {
         case 'carousel':
@@ -294,7 +313,10 @@ var controller = (function(data,UIctrl) {
       console.log('working');
       data.updateParent();
       domStrings = addSelectors(data.getParent(), data.getDomStrings());
-      UIctrl.reset(domStrings.edit, domStrings.destroy);
+      console.log(domStrings.edit, domStrings.destroy);
+      if (domStrings.edit){
+        UIctrl.reset(domStrings.edit, domStrings.destroy);
+    }
       loggedIn();
     },
 

@@ -1,22 +1,18 @@
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-12 col-lg-6 col-lg-offset-3">
+        <div class="col-sm-12 md-12 col-lg-6 col-lg-offset-3">
           <div class="entries">
             <%= render :partial => 'shared/dropdown', locals: {entry: entry} %>
-          <div class="subtitle">
-              <p>
-                <%= @user.name.capitalize %>'s Diary
-              </p>
-              <div class="wrapper">
-                <div class="divider div-transparent div-dot"></div>
-              </div>
+          <div class="title">
+            <div class="subtitle">
+                  <%= @user.name.capitalize %>'s Diary
             </div>
             <div class="date">
-              <h1>
                 <% date = entry.date %>
                 <%= Date.parse(date).strftime("%m/%d/%Y")%>
-              </h1>
             </div>
+          </div>
+            <div class="divider div-transparent div-dot"></div>
             <!-- This is where you enter text  -->
             <div class="entry">
               <%= entry.body.html_safe %>
@@ -35,9 +31,7 @@
               </div>
             </div>
             <div class="toggle">
-              <div class="wrapper">
                 <div class="divider div-transparent"></div>
-              </div>
               <div contenteditable="true" class="update-entry update-padding">
                 <p class="tab">&nbsp;</p>
               </div>

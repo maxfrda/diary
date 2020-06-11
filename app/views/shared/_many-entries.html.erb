@@ -8,6 +8,12 @@
   <% end %>
 
 <div class="carousel-wrapper">
+
+    <div class="button-wrapper">
+      <div class="carousel__button--next"></div>
+      <div class="carousel__button--prev"></div>
+    </div>
+
   <div class="carousel">
     <% if (@make_new) %>
     <!-- code only runs if todays entry hasnt been made -->
@@ -24,8 +30,4 @@
     <%= render :partial => 'shared/update-form' %>
   </div>
 </div>
-
-<div class="carousel__button--next"></div>
-<div class="carousel__button--prev"></div>
-
 

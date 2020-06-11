@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :entries, only: [:create, :index, :show, :destroy] do
     resources :updates, only: [:create]
  end
+ get '/about' => 'pages#about'
 end

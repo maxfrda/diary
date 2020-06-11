@@ -2,21 +2,18 @@
   <div class="row">
     <div class="col-sm-12 col-lg-6 col-lg-offset-3">
       <div class="entries">
-        <div class="subtitle" onclick="">
-          <p>
-            <%= link_to "Log-in", user_session_path %>
-            to save entries
-          </p>
-          <div class="wrapper">
-            <div class="divider div-transparent div-dot"></div>
+        <div class="title" style="margin-top: 20px;">
+          <div class="subtitle">
+
+              <%= link_to "Log-in", user_session_path %>
+              to save entries
+          </div>
+          <div class="date">
+              <% date = Time.now.to_s %>
+             <%= Date.parse(date).strftime("%m/%d/%Y")%>
           </div>
         </div>
-        <div class="date">
-          <h1>
-            <% date = Time.now.to_s %>
-           <%= Date.parse(date).strftime("%m/%d/%Y")%>
-          </h1>
-        </div>
+        <div class="divider div-transparent div-dot"></div>
         <!-- This is where you enter text  -->
         <div contenteditable="true" class="entry">
           <p class="tab" onclick="">&nbsp;</p>
