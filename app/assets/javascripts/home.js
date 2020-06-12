@@ -7,7 +7,7 @@
 // many entries( at least 2 entries )
 
 var diaryData = (function(){
-
+  var loggedOut = document.querySelector('.about-entry');
   var carousel = document.querySelector('.carousel');
   var singlePage = document.querySelector('.dropdown-child');
   var entryState, DOMstrings, parent;
@@ -38,13 +38,14 @@ var diaryData = (function(){
 
   // parent determines which ELEMENT queryselector searches
   parent = document;
-  if (carousel) {
+  if (loggedOut) {
+    parent = 'div.carousel__entry.active';
+    entryState = null;
+  } else if (carousel) {
     parent = 'div.carousel__entry.active';
     entryState = 'carousel';
-  } else if (singlePage) {
-    entryState = 'single';
   } else {
-    entryState = null;
+    entryState = 'single'
   };
 
   return {
@@ -99,9 +100,7 @@ var UIController = (function() {
     },
     reset: function(...args){
       args.forEach(function(cur){
-        console.log(cur);
         cur.style.display = 'none';
-        console.log('fuchskia;dlkf')
       });
     },
     // focus functions
@@ -116,10 +115,8 @@ var UIController = (function() {
         for (var i = 0; i < args.length; i++){
           if (args[i].style.display == 'block') {
               args[i].style.display = 'none';
-              console.log(`${args[i].className}: ${args[i].style.display}`)
           } else {
             args[i].style.display = 'block';
-              console.log(`${args[i].className}: ${args[i].style.display}`)
 
           }
       }
@@ -136,11 +133,10 @@ var controller = (function(data,UIctrl) {
 
 
   var loggedOut = function(){
-    UIctrl.autoClick(domStrings.paragraphFocus);
+    UIctrl.autoClick(document.querySelector('.entry'));
   };
 
   var loggedIn = function(){
-    console.log('logged in')
     UIctrl.autoClick(domStrings.paragraphFocus);
     determineEventListeners(domStrings.updateID);
 
@@ -150,7 +146,6 @@ var controller = (function(data,UIctrl) {
   var dropdownListener = function(){
       domStrings.ellipses.addEventListener('click', () => {
       UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
-      console.log(state);
     })
 
   };
@@ -160,8 +155,8 @@ var controller = (function(data,UIctrl) {
     domStrings.destroy);
     UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
     if (state == 'carousel'){
-      $("div.carousel__button--next").show();
-      $("div.carousel__button--prev").show();
+      $("div.carousel__entry.active div.carousel__button--next").show();
+      $("div.carousel__entry.active div.carousel__button--prev").show();
     }
   }
 
@@ -177,8 +172,8 @@ var controller = (function(data,UIctrl) {
 
             UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
             if (state == 'carousel'){
-              $("div.carousel__button--next").hide();
-              $("div.carousel__button--prev").hide();
+              $("div.carousel__entry.active div.carousel__button--next").hide();
+              $("div.carousel__entry.active div.carousel__button--prev").hide();
             }
           });
         } else if (cur == domStrings.newSave) {
@@ -194,7 +189,7 @@ var controller = (function(data,UIctrl) {
         })
 
         } else if (cur == domStrings.destroy){
-          console.log('destroy');
+          console.log('');
         }
       });
     };
@@ -207,10 +202,8 @@ var controller = (function(data,UIctrl) {
     if (entryID) {
       items = [domStrings.edit, domStrings.destroy, domStrings.save,
               domStrings.cancel, domStrings.parent]
-              console.log('newSave not being passed')
       UIctrl.flip(domStrings.edit, domStrings.destroy)
     } else {
-      console.log('new save being passed')
       items = [domStrings.newSave, domStrings.dropdown]
 
     };
@@ -295,13 +288,15 @@ var controller = (function(data,UIctrl) {
           break;
       }
 
-      domStrings = addSelectors(data.getParent(), data.getDomStrings());
-      console.log(data.getDomStrings());
       switch(state){
         case null:
           loggedOut();
+          carousel(document);
           break;
+        case 'single':
+        $('.button-wrapper').hide();
         default:
+          domStrings = addSelectors(data.getParent(), data.getDomStrings());
           loggedIn();
           break;
       }
@@ -310,15 +305,19 @@ var controller = (function(data,UIctrl) {
 
     carouselTasks: function(){
 
-      console.log('working');
-      data.updateParent();
-      domStrings = addSelectors(data.getParent(), data.getDomStrings());
-      console.log(domStrings.edit, domStrings.destroy);
-      if (domStrings.edit){
-        UIctrl.reset(domStrings.edit, domStrings.destroy);
+      if (domStrings) {
+        console.log('working');
+        data.updateParent();
+        domStrings = addSelectors(data.getParent(), data.getDomStrings());
+        console.log(domStrings.edit, domStrings.destroy);
+        if (domStrings.edit){
+          UIctrl.reset(domStrings.edit, domStrings.destroy);
+      }
+        loggedIn();
+      } else {
+        console.log('logged-out');
+      }
     }
-      loggedIn();
-    },
 
 
   };

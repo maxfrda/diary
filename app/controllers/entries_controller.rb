@@ -7,10 +7,7 @@ class EntriesController < ApplicationController
     @update = Update.new
   end
 
-  def index
-    @user = current_user
-    @entry = Entry.all
-  end
+
 
   def destroy
     @entry = Entry.find(params[:id])
@@ -20,13 +17,6 @@ class EntriesController < ApplicationController
       format.js { head :no_content }
     end
   end
-
-  def show
-    @entry = Entry.find(params[:id])
-    @user = current_user
-    @update = Update.new
-  end
-
 
 
   def create
@@ -39,7 +29,7 @@ class EntriesController < ApplicationController
       redirect_to root_path
     else
       redirect_to new_user_registration_path
-  end
+    end
   end
 
   private

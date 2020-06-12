@@ -25,16 +25,17 @@
   // Set click events to navigation buttons
 
   function setEventListeners() {
-     var next = d.getElementsByClassName('carousel__button--next')[0];
-     var prev = d.getElementsByClassName('carousel__button--prev')[0];
-
+     var next = d.querySelector('.carousel__entry.active div.carousel__button--next');
+     var prev = d.querySelector('.carousel__entry.active div.carousel__button--prev');
     next.addEventListener('click', () => {
       moveNext();
       controller.carouselTasks();
+      setEventListeners();
   });
     prev.addEventListener('click', () => {
       movePrev();
       controller.carouselTasks();
+      setEventListeners();
   });
   }
 
