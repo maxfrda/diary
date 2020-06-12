@@ -12,7 +12,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'simple_form'
-gem 'font-awesome-rails'
+gem "font-awesome-rails", github: "bokmann/font-awesome-rails", branch: "master"
 
 
 gem 'bootsnap', '>= 1.1.0', require: false
