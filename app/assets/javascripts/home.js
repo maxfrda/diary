@@ -255,7 +255,6 @@ var controller = (function(data,UIctrl) {
       for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
         var p = content[i].innerHTML;
         finalContent += `${p} <br>`;
-        console.log(finalContent);
       };
      document.getElementById("update_body").value = (finalContent);
      $('#update_button').click();
@@ -306,7 +305,6 @@ var controller = (function(data,UIctrl) {
     carouselTasks: function(){
 
       if (domStrings) {
-        console.log('working');
         data.updateParent();
         domStrings = addSelectors(data.getParent(), data.getDomStrings());
         console.log(domStrings.edit, domStrings.destroy);
