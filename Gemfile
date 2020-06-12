@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem "font-awesome-rails", github: "bokmann/font-awesome-rails", branch: "master"
 
+
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
