@@ -1,58 +1,62 @@
-
+/* line 2, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
 .dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
+
+/* line 6, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
 .dropdown-child {
-    display: none;
-    background-color: white;
-    min-width: 150px;
-    position: absolute;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 2;
-
+  display: none;
+  background-color: white;
+  min-width: 150px;
+  position: absolute;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 2;
 }
+
+/* line 15, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
 .dropdown-item {
-    color: black;
-    padding: 10px;
-    text-decoration: none;
-    display: block;
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
 }
 
-.dropdown-item:hover{
-  background-color: rgb(240,240,240);
+/* line 22, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
+.dropdown-item:hover {
+  background-color: #f0f0f0;
   color: inherit;
   text-decoration: none;
-
 }
 
-
-.dropdown-item.hyphen:hover{
- background-color: white;
+/* line 30, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
+.dropdown-item.hyphen:hover {
+  background-color: white;
 }
 
-
-.fa-ellipsis-v{
+/* line 35, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
+.fa-ellipsis-v {
   opacity: 20%;
   margin-top: 12px;
   font-size: 20px;
-
 }
 
-.ellipses{
+/* line 42, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
+.ellipses {
   border-radius: 30px;
   background-color: white;
   width: 40px;
   height: 40px;
+  position: relative;
+  top: -5%;
+  left: -15%;
   text-align: center;
-
+  z-index: 1000;
 }
 
-.ellipses:hover > .fa-ellipsis-v{
-
+/* line 51, /home/max/code/maxfrda/diary/app/assets/stylesheets/_dropdown.scss */
+.ellipses:hover > .fa-ellipsis-v {
   opacity: 80% !important;
-
-
 }
 
 #save {

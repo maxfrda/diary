@@ -1,7 +1,0 @@
-<% @user.entries.each do |entry|  %>
-<h1><%= entry.date  %></h1>
-<h2><%= entry.body %></h2>
-  <% entry.updates.each do |update| %>
-    <%= update.body %>
-  <% end %>
-<% end %>
