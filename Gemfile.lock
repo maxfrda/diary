@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/bokmann/font-awesome-rails.git
+  revision: d4a2e506be0318e35d05ad22d36531b7da393615
+  branch: master
+  specs:
+    font-awesome-rails (4.7.0.5)
+      railties (>= 3.2, < 6.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -223,6 +231,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
+  font-awesome-rails!
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
