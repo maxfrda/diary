@@ -27,12 +27,12 @@
   function setEventListeners() {
      var next = d.querySelector('.carousel__entry.active div.carousel__button--next');
      var prev = d.querySelector('.carousel__entry.active div.carousel__button--prev');
-    next.addEventListener('click', () => {
+    next.addEventListener('click', function(){
       moveNext();
       controller.carouselTasks();
       setEventListeners();
   });
-    prev.addEventListener('click', () => {
+    prev.addEventListener('click', function(){
       movePrev();
       controller.carouselTasks();
       setEventListeners();

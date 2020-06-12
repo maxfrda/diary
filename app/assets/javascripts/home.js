@@ -144,7 +144,7 @@ var controller = (function(data,UIctrl) {
   };
 
   var dropdownListener = function(){
-      domStrings.ellipses.addEventListener('click', () => {
+      domStrings.ellipses.addEventListener('click', function() {
       UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
     })
 
@@ -165,7 +165,7 @@ var controller = (function(data,UIctrl) {
   var setEventListeners = function(...args){
     args.forEach(function(cur){
       if (cur == domStrings.edit) {
-          cur.addEventListener('click', () => {
+          cur.addEventListener('click', function(){
             UIctrl.flip(cur, domStrings.cancel, domStrings.save,
               domStrings.destroy, domStrings.parent);
             UIctrl.autoClick(domStrings.updateFocus);
