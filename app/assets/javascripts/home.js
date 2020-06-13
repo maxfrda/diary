@@ -322,6 +322,9 @@ var controller = (function(data,UIctrl) {
 
 })(diaryData,UIController);
 
-controller.init();
+
+if (document.querySelector('.date')){
+  controller.init();
+}
 
 
