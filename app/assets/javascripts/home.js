@@ -29,7 +29,7 @@ var diaryData = (function(){
     updateText: '.update-padding',
     updateFocus: '.update-entry',
     updateButton: '#update_button',
-    newContent: 'p.tab',
+    newContent: '.update-entry',
     newSave: '#save',
     entryBody: '#entry_body',
     entryButton: '#button'
@@ -225,9 +225,9 @@ var controller = (function(data,UIctrl) {
 
     var saveEntry = function() {
       if (state == 'carousel') {
-        var content = $("div.carousel__entry.active p.tab");
+        var content = $("div.carousel__entry.active div.entry");
       } else {
-        var content = $("p.tab");
+        var content = $("div.entry");
       }
       var input = domStrings.entryBody;
       var finalContent = '';
@@ -247,9 +247,9 @@ var controller = (function(data,UIctrl) {
 
     var updateEntry = function() {
       if (state == 'carousel') {
-        var content = $("div.carousel__entry.active p.tab");
+        var content = $("div.carousel__entry.active div.update-entry");
       } else {
-        var content = $("p.tab");
+        var content = $("div.update-entry");
       }
       var finalContent = '';
       for (i = 0; i < content.length; i++) { // filters out tabs that are in other entries
@@ -260,9 +260,9 @@ var controller = (function(data,UIctrl) {
      $('#update_button').click();
      var p = domStrings.updateID.innerHTML;
      $(`#update-${p}`).load(` #update-${p}`);
+      cancelFunction();
      domStrings.newContent.innerHTML = "&nbsp;";
 
-      cancelFunction();
   };
 
   var preventTab = function(){
