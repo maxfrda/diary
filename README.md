@@ -7,8 +7,8 @@ on a mobile device.
 
 You can create, update, and delete entries, however the update feature does not update the original text but instead inserts a new "updated" section that gets time-stamped, as it is meant to be used when coming back to an entry later. The thinking here was that diaries are meant to be time-capsules, so you shouldn't be able to go back and edit the original text. If you really don't like it though, you can delete the entire entry. 
 
-No API is used for text entry, instead I use a contenteditable DIV. 
+No API is used for text entry, instead I used a contenteditable DIV. 
 
-I used jquery and javascript to handle the user interface. 
+I used jquery and javascript to handle the user interface, and Ruby/Rails for back-end
 
 https://www.thesimplediary.com/
