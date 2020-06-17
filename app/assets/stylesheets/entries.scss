@@ -7,7 +7,7 @@
 
 /* line 9, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .entry {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   margin-left: 40px;
   margin-right: 40px;
   margin-bottom: 20px;
@@ -85,7 +85,7 @@ h1 {
 .subtitle {
   position: relative;
   top: -2.2rem;
-  font-size: 3rem;
+  font-size: 3.1rem;
   font-family: 'Tangerine', cursive;
 }
 
@@ -109,6 +109,32 @@ h1 {
   /* or height: 9.5in; */
   background-color: white;
 }
+
+
+    @media only screen and (max-width: 770px){
+        //MOBILE ONLY STYLES
+        .entries{
+          min-height: 45vh;
+          margin-top: 20rem;
+        }
+
+        .date{
+          font-size: 1.5rem;
+          top: -1.9rem;
+
+        }
+
+        .subtitle{
+          font-size: 1.5rem;
+        }
+
+        .entry{
+          font-size: 1rem;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+
+  }
 
 /* line 105, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .entries-list {
@@ -329,7 +355,7 @@ h1 {
 
 /* line 297, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .updates {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   margin-left: 40px;
   margin-right: 40px;
   margin-bottom: 20px;
