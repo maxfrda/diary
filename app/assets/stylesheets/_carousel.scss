@@ -65,8 +65,8 @@
 .carousel__button--prev,
 .carousel__button--next {
   position: relative;
-  width: 3rem;
-  height: 3rem;
+  width: 2.3rem;
+  height: 2.3rem;
   background-color: #FFF;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -74,7 +74,7 @@
   cursor: pointer;
   z-index: 1001;
   /* Sit on top of everything */
-  border: 1px solid #DAA520;
+  border: .08rem solid #DAA520;
 }
 
 /* line 354, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
@@ -100,12 +100,12 @@
 .carousel__button--next::after {
   content: " ";
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: .8rem;
+  height:.8rem;
   top: 50%;
   left: 54%;
-  border-right: 2px  solid #DAA520;
-  border-bottom: 2px solid #DAA520;
+  border-right: .15rem  solid #DAA520;
+  border-bottom: .15rem solid #DAA520;
   -webkit-transform: translate(-50%, -50%) rotate(135deg);
   transform: translate(-50%, -50%) rotate(135deg);
 }
