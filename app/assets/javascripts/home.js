@@ -314,6 +314,7 @@ var controller = (function(data,UIctrl) {
         loggedIn();
       } else {
         console.log('logged-out');
+        UIctrl.autoClick($('.entry'));
       }
     }
 
