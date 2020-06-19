@@ -5,6 +5,7 @@ class EntriesController < ApplicationController
     @entries = Entry.all
     @user = current_user
     @update = Update.new
+    raise
   end
 
 
