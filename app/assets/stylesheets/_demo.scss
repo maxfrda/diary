@@ -1,0 +1,127 @@
+.click-me{
+  position: fixed;
+  top: 2%;
+  right: 20%;
+}
+
+.box {
+  width: 300px;
+  margin: 50px auto;
+  background: #daa520;
+  padding: 10px;
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+  font-size: 18px;
+  font-family: arial;
+  position:absolute;
+  top: 50%;
+  right: 30%;
+  z-index: 2000;
+}
+
+.sb1:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #daa520;
+  border-top: 10px solid #daa520;
+  border-bottom: 10px solid transparent;
+  left: -20px;
+  top: 6px;
+}
+
+
+.wrapper_buttons{
+  margin-right: 20px;
+}
+  // box-shadow: inset 0px 0px 9px 1px rgba(218, 165, 32, .3);
+
+.demo_button {
+  background-color: #daa520;
+  border-radius: 30px;
+  border: 1.7px solid #daa520;
+  display: inline-block;
+  color: white;
+  font-weight: 300;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 10px 20px;
+
+}
+
+/* line 57, /home/max/code/maxfrda/diary/app/assets/stylesheets/_demo.scss */
+.log_in_button {
+  background-color: white;
+  border-radius: 30px;
+  border: 1.7px solid #daa520;
+  display: inline-block;
+  color: #daa520;
+  font-weight: 300;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+ .log_in_button:hover{
+  box-shadow: inset 0px 0px 9px 1px rgba(218, 165, 32, .3);
+  color: #daa520;
+  text-decoration: none;
+
+}
+
+ .demo_button:hover{
+  box-shadow: inset 0px 0px 9px 1px rgba(255, 255, 255, .3);
+  text-decoration: none;
+  color: white;
+
+}
+
+
+/* line 370, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
+
+.home_page_button_wrapper{
+  position: absolute;
+  right: 12%;
+  top: 2%;
+
+}
+
+
+ @media only screen and (max-width: 670px){
+        //MOBILE ONLY STYLES
+    .home_page_button_wrapper{
+      position: absolute;
+      right: 18%;
+      top: 70%;
+
+    }
+
+    .log_in_button,
+    .demo_button {
+      font-size: 12px;
+    padding: 5px 10px;
+
+    }
+
+    .log_in_button{
+      margin-left: 40px;
+    }
+
+  }
+
+   // @media only screen and (max-width: 1070px){
+   //      //MOBILE ONLY STYLES
+   //  .home_page_button_wrapper{
+   //    position: absolute;
+   //    right: 5%;
+   //    top: 3%;
+
+
+   //  }
+
+
+  // }

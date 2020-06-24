@@ -25,7 +25,7 @@
   top: 0;
   width: 100%;
   margin: auto;
-  padding: 1rem 4rem;
+  // padding: 1rem 4rem;
   z-index: 100;
   -webkit-transition: opacity .5s, z-index .5s, -webkit-transform .5s;
   transition: opacity .5s, z-index .5s, -webkit-transform .5s;
@@ -108,6 +108,7 @@
   border-bottom: .15rem solid #DAA520;
   -webkit-transform: translate(-50%, -50%) rotate(135deg);
   transform: translate(-50%, -50%) rotate(135deg);
+
 }
 
  @media only screen and (max-width: 670px){

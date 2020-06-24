@@ -133,7 +133,10 @@ var controller = (function(data,UIctrl) {
 
 
   var loggedOut = function(){
-    UIctrl.autoClick(document.querySelector('.entry'));
+    determineEventListeners(domStrings.updateID);
+    UIctrl.autoClick(domStrings.paragraphFocus);
+
+
   };
 
   var loggedIn = function(){
@@ -203,11 +206,11 @@ var controller = (function(data,UIctrl) {
       items = [domStrings.edit, domStrings.destroy, domStrings.save,
               domStrings.cancel, domStrings.parent]
       UIctrl.flip(domStrings.edit, domStrings.destroy)
-    } else {
+    } else if (domStrings.newSave) {
       items = [domStrings.newSave, domStrings.dropdown]
-
-    };
-
+    } else {
+      items = [domStrings.dropdown];
+    }
     dropdownListener();
 
       items.forEach (function(cur) {
@@ -282,20 +285,19 @@ var controller = (function(data,UIctrl) {
       preventTab();
       state = data.getState();
       switch (state) {
-        case 'carousel':
-          carousel(document);
+        case 'single':
+        $('.button-wrapper').hide();
           break;
+        default:
+        carousel(document);
       }
+      domStrings = addSelectors(data.getParent(), data.getDomStrings());
 
       switch(state){
         case null:
           loggedOut();
-          carousel(document);
           break;
-        case 'single':
-        $('.button-wrapper').hide();
         default:
-          domStrings = addSelectors(data.getParent(), data.getDomStrings());
           loggedIn();
           break;
       }
@@ -304,18 +306,13 @@ var controller = (function(data,UIctrl) {
 
     carouselTasks: function(){
 
-      if (domStrings) {
         data.updateParent();
         domStrings = addSelectors(data.getParent(), data.getDomStrings());
-        console.log(domStrings.edit, domStrings.destroy);
         if (domStrings.edit){
           UIctrl.reset(domStrings.edit, domStrings.destroy);
       }
         loggedIn();
-      } else {
-        console.log('logged-out');
-        UIctrl.autoClick($('.entry'));
-      }
+
     }
 
 
@@ -329,3 +326,5 @@ if (document.querySelector('.date')){
 }
 
 
+// text box is generated with text and next button in upper left corner
+// move text box to text entry, generate default text

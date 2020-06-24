@@ -11,11 +11,10 @@
                 <div class="carousel__button--prev"></div>
               </div>
               <div class="title">
-                <div class="subtitle">
+              <div class="subtitle">
+                    <span style="font-size: 4rem">The Simple Diary</span>
 
-                    <%= link_to "Log-in", user_session_path %>
-                    to save entries
-                </div>
+              </div>
                 <div class="date">
                     <% date = Time.now.to_s %>
                    <%= Date.parse(date).strftime("%m/%d/%Y")%>
@@ -36,8 +35,8 @@
       </div>
     </div>
     <span class ="click-me"></span>
-    <span class="box">Welcome to The Simple Diary! Follow the interactive demo for
-    and overview of the app!</span>
+    <span class="box">Welcome to The Simple Diary demonstration. Here is where you
+    enter text. Type something to continue...</span>
 
     <div class="carousel__entry">
       <div class="container-fluid">
@@ -53,7 +52,8 @@
               <div class="title">
 
                 <div class="subtitle">
-                      About
+                    <span style="font-size: 4rem">The Simple Diary</span>
+
                 </div>
                 <div class="date">
                     06/10/2020

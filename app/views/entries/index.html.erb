@@ -1,7 +1,5 @@
     <% date = Date.today.strftime %>
-    <% if !user_signed_in? %>
-      <%= render :partial => 'shared/logged-out' %>
-    <% elsif user_signed_in? && !@user.entries.exists? %>
+    <% if !@user.entries.exists? %>
       <%= render :partial => 'shared/zero-entries' %>
     <% elsif @user.entries.first.date == date  && @user.entries.count == 1%>
       <% @user.entries.each_with_index do |entry, index|  %>

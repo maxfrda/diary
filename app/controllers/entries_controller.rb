@@ -1,13 +1,17 @@
 require 'date'
 class EntriesController < ApplicationController
-  def home
+
+  def demo
+    @entry = Entry.new
+    @update = Update.new
+  end
+
+  def index
     @entry = Entry.new
     @entries = Entry.all
     @user = current_user
     @update = Update.new
   end
-
-
 
   def destroy
     @entry = Entry.find(params[:id])
