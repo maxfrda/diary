@@ -139,6 +139,7 @@ var controller = (function(data,UIctrl) {
 
   };
 
+
   var loggedIn = function(){
     UIctrl.autoClick(domStrings.paragraphFocus);
     determineEventListeners(domStrings.updateID);

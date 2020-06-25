@@ -34,3 +34,7 @@ if (idButton) {
 
 
 
+const textDetector = function(){
+  const text = document.getElementById('#demo-text')
+  if text.innerHTML.length > 1
+}
