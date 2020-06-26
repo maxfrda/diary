@@ -136,6 +136,7 @@ var controller = (function(data,UIctrl) {
     determineEventListeners(domStrings.updateID);
     UIctrl.autoClick(domStrings.paragraphFocus);
     stepOne();
+    demoListeners();
 
   };
 
@@ -145,22 +146,48 @@ var controller = (function(data,UIctrl) {
     determineEventListeners(domStrings.updateID);
 
 
-
   };
+
+  const demoListeners = function(){
+    const save = document.getElementById('demo-save');
+    save.addEventListener('click', demoEntry);
+  }
+
+  const demoEntry = function(){
+    const content = $("div.carousel__entry.active div.entry");
+    const postEntry = document.getElementById('demo-entry');
+      var finalContent = '';
+      for (i = 0; i < content.length; i++) {
+        var p = content[i].innerHTML;
+        finalContent += `${p} <br>`;
+      };
+
+      postEntry.innerHTML = `<div class="entry" style="font-size: 16px">
+                            ${finalContent}</div>`
+      stepTwo();
+  }
 
 
   const stepOne = function(){
     let check = document.querySelector('.tab').innerText;
 
     if(check.length > 2){
-      const box = document.querySelector('.box1')
-      const box1 = document.querySelector('.box2')
-      box.style.display = 'none'
-      box1.style.display = 'block'
-  // show "delete" icon
-    }
-    setTimeout(stepOne, 100);
+      const box = document.querySelector('.box1');
+      const box1 = document.querySelector('.box2');
+      box.style.display = 'none';
+      box1.style.display = 'block';
+
+    };
+
+      setTimeout(stepOne, 100);
+
   };
+
+  const stepTwo = function(){
+    let box = document.querySelector('.box2');
+    UIctrl.flip(domStrings.dropdown, box)
+
+  }
 
   var dropdownListener = function(){
       domStrings.ellipses.addEventListener('click', function() {
