@@ -135,7 +135,7 @@ var controller = (function(data,UIctrl) {
   var loggedOut = function(){
     determineEventListeners(domStrings.updateID);
     UIctrl.autoClick(domStrings.paragraphFocus);
-
+    stepOne();
 
   };
 
@@ -145,6 +145,21 @@ var controller = (function(data,UIctrl) {
     determineEventListeners(domStrings.updateID);
 
 
+
+  };
+
+
+  const stepOne = function(){
+    let check = document.querySelector('.tab').innerText;
+
+    if(check.length > 2){
+      const box = document.querySelector('.box1')
+      const box1 = document.querySelector('.box2')
+      box.style.display = 'none'
+      box1.style.display = 'block'
+  // show "delete" icon
+    }
+    setTimeout(stepOne, 100);
   };
 
   var dropdownListener = function(){
