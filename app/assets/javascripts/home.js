@@ -20,6 +20,7 @@ var diaryData = (function(){
     save: '.save',
     cancel: '.cancel',
     destroy: '.delete',
+    tab: '.tab',
     parent: '.toggle',
     paragraphFocus: '.entry',
     docHeight: '.entries',
@@ -133,8 +134,13 @@ var controller = (function(data,UIctrl) {
 
 
   var loggedOut = function(){
-    UIctrl.autoClick(document.querySelector('.entry'));
+    determineEventListeners(domStrings.updateID);
+    UIctrl.autoClick(domStrings.paragraphFocus);
+    stepOne();
+    demoListeners();
+
   };
+
 
   var loggedIn = function(){
     UIctrl.autoClick(domStrings.paragraphFocus);
@@ -142,6 +148,66 @@ var controller = (function(data,UIctrl) {
 
 
   };
+
+  const demoListeners = function(){
+    const save = document.getElementById('demo-save');
+    save.addEventListener('click', demoEntry);
+  }
+
+  const demoEntry = function(){
+    const content = $("div.carousel__entry.active div.entry");
+    const postEntry = document.getElementById('demo-entry');
+      var finalContent = '';
+      for (i = 0; i < content.length; i++) {
+        var p = content[i].innerHTML;
+        finalContent += `${p} <br>`;
+      };
+
+      postEntry.innerHTML = `<div class="entry" style="font-size: 16px">
+                            ${finalContent}</div>`
+      stepTwo();
+  }
+
+
+  const stepOne = function(){
+    let check = document.querySelector('.tab').innerText;
+
+      if(check.length > 2 ){
+        const box = document.querySelector('.box1');
+        const box2 = document.querySelector('.box2');
+        box.style.display = 'none';
+
+        if (box2.style.display !== 'none'){
+          box2.style.display = 'block';
+        }
+      }
+        setTimeout(stepOne, 100);
+
+
+  };
+
+  const stepTwo = function(){
+    let box2 = document.querySelector('.box2');
+    let box3 = document.querySelector('.box3');
+    let box4 = document.querySelector('.box4');
+    let wrapper = document.querySelector('.button-wrapper');
+    let button = document.querySelector('.carousel__button--next');
+    let button2 = document.querySelector('.carousel__button--prev');
+
+
+    UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
+    UIctrl.flip(box2, box3, wrapper);
+
+    button.addEventListener('click', function(){
+      UIctrl.flip(box3, box4)
+    });
+
+    button2.addEventListener('click', function(){
+      UIctrl.flip(box3, box4)
+    });
+
+
+  }
 
   var dropdownListener = function(){
       domStrings.ellipses.addEventListener('click', function() {
@@ -203,11 +269,11 @@ var controller = (function(data,UIctrl) {
       items = [domStrings.edit, domStrings.destroy, domStrings.save,
               domStrings.cancel, domStrings.parent]
       UIctrl.flip(domStrings.edit, domStrings.destroy)
-    } else {
+    } else if (domStrings.newSave) {
       items = [domStrings.newSave, domStrings.dropdown]
-
-    };
-
+    } else {
+      items = [domStrings.dropdown];
+    }
     dropdownListener();
 
       items.forEach (function(cur) {
@@ -282,20 +348,19 @@ var controller = (function(data,UIctrl) {
       preventTab();
       state = data.getState();
       switch (state) {
-        case 'carousel':
-          carousel(document);
+        case 'single':
+        $('.button-wrapper').hide();
           break;
+        default:
+        carousel(document);
       }
+      domStrings = addSelectors(data.getParent(), data.getDomStrings());
 
       switch(state){
         case null:
           loggedOut();
-          carousel(document);
           break;
-        case 'single':
-        $('.button-wrapper').hide();
         default:
-          domStrings = addSelectors(data.getParent(), data.getDomStrings());
           loggedIn();
           break;
       }
@@ -304,18 +369,13 @@ var controller = (function(data,UIctrl) {
 
     carouselTasks: function(){
 
-      if (domStrings) {
         data.updateParent();
         domStrings = addSelectors(data.getParent(), data.getDomStrings());
-        console.log(domStrings.edit, domStrings.destroy);
         if (domStrings.edit){
           UIctrl.reset(domStrings.edit, domStrings.destroy);
       }
         loggedIn();
-      } else {
-        console.log('logged-out');
-        UIctrl.autoClick($('.entry'));
-      }
+
     }
 
 
@@ -329,3 +389,5 @@ if (document.querySelector('.date')){
 }
 
 
+// text box is generated with text and next button in upper left corner
+// move text box to text entry, generate default text

@@ -1,0 +1,38 @@
+  <!-- code only runs if todays entry hasnt been made -->
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6 col-lg-offset-3">
+            <div class="entries">
+            <div class="title">
+              <div class="subtitle" style="margin-top: 40px">
+                    <span style="font-size: 4rem">The Simple Diary</span>
+              </div>
+              <div class="date">
+
+                    <% date = Time.now.to_s %>
+                    <%= Date.parse(date).strftime("%m/%d/%Y")%>
+
+              </div>
+            </div>
+              <div class="divider div-transparent div-dot"></div>
+              <!-- This is where you enter text  -->
+              <div class="entry">
+                <p id="demo-text">
+
+                </p>
+              </div>
+              <div class="margin"></div>
+              <div class="count">
+                <p>- 1 -</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='home_page_button_wrapper'>
+        <span><%= link_to 'Demo', demo_path, class: "wrapper_buttons demo_button" %></span>
+        <span> <%= link_to 'Log-in', user_session_path, class: "wrapper_buttons log_in_button" %>
+        </span>
+      </div>

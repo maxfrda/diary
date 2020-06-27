@@ -6,16 +6,15 @@
           <div class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-3">
             <div class="entries">
               <%= render :partial => 'shared/demo-dropdown' %>
-              <div class="button-wrapper">
+              <div class="button-wrapper " style="display:none">
                 <div class="carousel__button--next"></div>
                 <div class="carousel__button--prev"></div>
               </div>
               <div class="title">
-                <div class="subtitle">
+              <div class="subtitle">
+                    <span style="font-size: 4rem">The Simple Diary</span>
 
-                    <%= link_to "Log-in", user_session_path %>
-                    to save entries
-                </div>
+              </div>
                 <div class="date">
                     <% date = Time.now.to_s %>
                    <%= Date.parse(date).strftime("%m/%d/%Y")%>
@@ -23,8 +22,10 @@
               </div>
               <div class="divider div-transparent div-dot"></div>
               <!-- This is where you enter text  -->
-              <div contenteditable="true" class="entry">
-                <p class="tab" style="font-size: 16px">&nbsp;</p>
+              <div id="demo-entry">
+                <div contenteditable="true" class="entry">
+                  <p class="tab" style="font-size: 16px">&nbsp;</p>
+                </div>
               </div>
               <div class="margin"></div>
               <div class="count">
@@ -35,9 +36,20 @@
         </div>
       </div>
     </div>
-    <span class ="click-me"></span>
-    <span class="box">Welcome to The Simple Diary! Follow the interactive demo for
-    and overview of the app!</span>
+
+    <span class="box1 sb1 ">Welcome to The Simple Diary demonstration. Here is where you
+    enter text. Type something to continue...</span>
+
+    <span class="box2 sb2 ">Great! This is the drop down, try clicking it then
+    selecting "save".</span>
+
+    <span class="box3 sb3 ">Your entry is now saved. When you have more than one entry
+    you can cycle through them by using these arrows.</span>
+
+    <span class="box4">All done. You can now <%= link_to "return home", root_path,
+     class: "link-styling" %>
+      to log-in/sign-up
+    </span>
 
     <div class="carousel__entry">
       <div class="container-fluid">
@@ -53,7 +65,8 @@
               <div class="title">
 
                 <div class="subtitle">
-                      About
+                    <span style="font-size: 4rem">The Simple Diary</span>
+
                 </div>
                 <div class="date">
                     06/10/2020
@@ -62,26 +75,7 @@
                   <div class="divider div-transparent div-dot"></div>
               <!-- This is where you enter text  -->
               <div class="entry">
-                <p style="font-size: 1.3rem">Welcome to The Simple Diary, a diary app
-                 designed to be simple and intuitive.
-                  <br>
-                  <br>
-                  <br>
-                  The app was created because I had grown tired of using text editors to record things
-                  and having to manually time-stamp and name everything; I figured it would be better
-                  to have something do this for me. I looked into other diary apps but they were all
-                  over-engineered and bloated with unnecessary features that made them frustrating and
-                  counter-intuitive to use. As you'll notice, there are virtually no links anywhere
-                  on the page, just the document for text entry. There are also only 2 features,
-                  saving and updating an entry. The update feature allows you to come back to a
-                  post and add a comment to it, with the comment getting time-stamped automatically.
-                  <br>
-                  <br>
-                  <br>
-                  The Simple Diary was designed primarily for desktop use,
-                  however it will work on hand-held devices.
-                  <br>
-                  <br>
+                <p style="font-size: 16px">
                   If you have any comments or questions, feel free to email thesimplediary@yahoo.com
                 </p>
               <div class="count">
