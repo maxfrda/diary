@@ -20,6 +20,7 @@ var diaryData = (function(){
     save: '.save',
     cancel: '.cancel',
     destroy: '.delete',
+    tab: '.tab',
     parent: '.toggle',
     paragraphFocus: '.entry',
     docHeight: '.entries',
@@ -171,15 +172,17 @@ var controller = (function(data,UIctrl) {
   const stepOne = function(){
     let check = document.querySelector('.tab').innerText;
 
-    if(check.length > 2){
-      const box = document.querySelector('.box1');
-      const box1 = document.querySelector('.box2');
-      box.style.display = 'none';
-      box1.style.display = 'block';
+      if(check.length > 2 ){
+        const box = document.querySelector('.box1');
+        const box2 = document.querySelector('.box2');
+        box.style.display = 'none';
 
-    };
+        if (box2.style.display !== 'none'){
+          box2.style.display = 'block';
+        }
+      }
+        setTimeout(stepOne, 100);
 
-      setTimeout(stepOne, 100);
 
   };
 
