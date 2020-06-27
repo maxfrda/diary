@@ -187,8 +187,25 @@ var controller = (function(data,UIctrl) {
   };
 
   const stepTwo = function(){
-    let box = document.querySelector('.box2');
-    UIctrl.flip(domStrings.dropdown, box)
+    let box2 = document.querySelector('.box2');
+    let box3 = document.querySelector('.box3');
+    let box4 = document.querySelector('.box4');
+    let wrapper = document.querySelector('.button-wrapper');
+    let button = document.querySelector('.carousel__button--next');
+    let button2 = document.querySelector('.carousel__button--prev');
+
+
+    UIctrl.dropdownToggle(domStrings.dots, domStrings.dropdown);
+    UIctrl.flip(box2, box3, wrapper);
+
+    button.addEventListener('click', function(){
+      UIctrl.flip(box3, box4)
+    });
+
+    button2.addEventListener('click', function(){
+      UIctrl.flip(box3, box4)
+    });
+
 
   }
 
