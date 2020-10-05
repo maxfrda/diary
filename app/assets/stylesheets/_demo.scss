@@ -6,10 +6,6 @@
 
 
 
-.box2{
-  display: none;
-}
-
 .box1,
 .box2,
 .box3,
@@ -25,68 +21,64 @@
   font-family: arial;
   position:absolute;
   top: 0%;
-  left: 8%;
+  left: 2%;
   z-index: 2000;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
 
 }
 
-.box2{
-  top: -5%;
-
-}
 
 
+
+.box2,
 .box3,
 .box4{
-  top: -2%;
-  left: 75%;
   display: none;
 
 }
 
-.sb1:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid #daa520;
-  border-right: 10px solid transparent;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid #daa520;
-  right: -20px;
-  top: 76px;
+// .sb1:before {
+//   content: "";
+//   width: 0px;
+//   height: 0px;
+//   position: absolute;
+//   border-left: 10px solid #daa520;
+//   border-right: 10px solid transparent;
+//   border-top: 10px solid transparent;
+//   border-bottom: 10px solid #daa520;
+//   right: -20px;
+//   top: 76px;
 
 
-}
+// }
 
-.sb2:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid #daa520;
-  border-right: 10px solid transparent;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid #daa520;
-  right: -20px;
-  top: 16px;
+// .sb2:before {
+//   content: "";
+//   width: 0px;
+//   height: 0px;
+//   position: absolute;
+//   border-left: 10px solid #daa520;
+//   border-right: 10px solid transparent;
+//   border-top: 10px solid transparent;
+//   border-bottom: 10px solid #daa520;
+//   right: -20px;
+//   top: 16px;
 
-}
+// }
 
-.sb3:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 10px solid transparent;
-  border-right: 10px solid #daa520;
-  border-top: 10px solid #daa520;
-  border-bottom: 10px solid transparent;
-  left: -20px;
-  top: 16px;
+// .sb3:before {
+//   content: "";
+//   width: 0px;
+//   height: 0px;
+//   position: absolute;
+//   border-left: 10px solid transparent;
+//   border-right: 10px solid #daa520;
+//   border-top: 10px solid #daa520;
+//   border-bottom: 10px solid transparent;
+//   left: -20px;
+//   top: 16px;
 
-}
+// }
 
 
 .wrapper_buttons{
@@ -172,14 +164,7 @@
 
   }
 
-   @media only screen and (max-width: 1400px){
-        //MOBILE ONLY STYLES
-        .box2{
-          left: 3%;
-          top: -10%;
-        }
 
-}
    @media only screen and (max-width: 1070px){
         //MOBILE ONLY STYLES
     .demo_button{
@@ -189,6 +174,12 @@
 
 
   }
+
+   @media only screen and (min-width: 4000px){
+    // .box1{
+    //   background-color: red ;
+    // }
+   }
 
 .link-styling{
  color:white;
