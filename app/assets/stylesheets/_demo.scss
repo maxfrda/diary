@@ -36,8 +36,6 @@
 
 }
 
-.box1{
-}
 
 .box3,
 .box4{
@@ -174,6 +172,14 @@
 
   }
 
+   @media only screen and (max-width: 1400px){
+        //MOBILE ONLY STYLES
+        .box2{
+          left: 3%;
+          top: -10%;
+        }
+
+}
    @media only screen and (max-width: 1070px){
         //MOBILE ONLY STYLES
     .demo_button{

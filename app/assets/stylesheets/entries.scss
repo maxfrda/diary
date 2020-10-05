@@ -15,7 +15,7 @@
 
 /* line 16, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .update-entry {
-  font-size: 16px;
+  font-size: 1.4rem;
   margin-left: 40px;
   margin-right: 40px;
 }
@@ -111,30 +111,7 @@ h1 {
 }
 
 
-    @media only screen and (max-width: 670px){
-        //MOBILE ONLY STYLES
-        .entries{
-          min-height: 45vh;
-          margin-top: 20rem;
-        }
 
-        .date{
-          font-size: 1.5rem;
-          top: -1.9rem;
-
-        }
-
-        .subtitle{
-          font-size: 1.5rem;
-        }
-
-        .entry{
-          font-size: 1rem;
-          margin-left: 10px;
-          margin-right: 10px;
-        }
-
-  }
 
 /* line 105, /home/max/code/maxfrda/diary/app/assets/stylesheets/entries.scss */
 .entries-list {
